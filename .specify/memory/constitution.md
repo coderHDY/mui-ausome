@@ -1,50 +1,159 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# 项目规范 (Constitution)
 
-## Core Principles
+本文档定义了项目的核心原则和架构规范，所有代码必须遵循这些规范。
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+## 1. 项目目标
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+- 构建生产级的管理仪表板，使用 React
+- 支持主题切换（浅色 / 深色 / 自定义主题）
+- 确保 UI 一致性、可扩展性和可维护性
+- 支持长期演进，无需重新设计整个系统
+- 优化开发者体验和团队协作
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+## 2. 非目标
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+- 本项目不关注视觉实验
+- 本项目不优先考虑快速原型而非结构
+- 本项目不允许将业务逻辑嵌入 UI 组件
+- 本项目不允许临时样式或页面级设计分歧
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+## 3. 架构原则
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+- 应用遵循模块化、功能导向的结构
+- UI、状态和业务逻辑必须明确分离
+- 页面编排数据和布局；组件尽可能保持无状态
+- 除非通过公共 API 明确定义，否则不允许跨模块导入
+- 架构必须支持增量复杂度增长，而非前期过度工程化
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+## 4. UI 和主题原则
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+- 单一设计系统管理间距、字体、颜色和交互
+- 主题令牌（颜色、阴影、圆角）集中定义，绝不硬编码
+- 组件必须默认支持主题
+- 除非有充分理由，否则禁止内联样式或任意 CSS 值
+- 所有布局原语（间距、网格、弹性布局）必须来自设计系统
+- 视觉更改应该可以在不触及业务逻辑的情况下实现
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## 5. 状态和数据原则
 
-## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+- 本地 UI 状态保持本地
+- 共享 UI 状态使用专用状态层
+- 服务器状态和客户端 UI 状态必须明确分离
+- 数据获取逻辑绝不嵌入展示组件中
+- 副作用被隔离且可测试
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+## 6. 代码质量和约束
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+- 所有组件必须可预测和确定性
+- 禁止"魔法行为"或隐式副作用
+- 命名必须反映领域意图，而非技术实现
+- 文件和目录必须保持浅层且易于发现
+- 积极移除死代码和未使用的抽象
+
+## 7. 决策优先级规则
+
+当出现冲突时，按以下顺序决策：
+
+1. 长期可维护性
+2. UI 一致性
+3. 开发者清晰度
+4. 性能（除非关键）
+5. 短期开发速度
+
+## 目录结构规范
+
+```
+src/
+├── design-system/          # 设计系统（公共API）
+│   ├── tokens/             # 设计令牌
+│   └── theme/              # 主题系统
+├── shared/                 # 共享模块（公共API）
+│   ├── components/         # 共享UI组件
+│   ├── layout/             # 布局组件
+│   └── state/              # 共享状态管理
+└── features/               # 功能模块（按功能组织）
+    └── [feature-name]/     # 功能模块
+        ├── components/     # 功能特定组件
+        ├── pages/          # 页面组件
+        └── index.ts        # 公共API导出
+```
+
+## 导入规范
+
+- 设计系统：`@design-system/*`
+- 共享模块：`@shared/*`
+- 功能模块：`@features/*`
+- 绝对路径：`@/*`
+
+## 组件设计规范
+
+### 展示组件
+- 纯 UI 组件，通过 props 接收数据
+- 不包含业务逻辑
+- 不直接访问状态管理
+
+### 容器组件
+- 在页面层或功能模块中
+- 负责数据获取和状态管理
+- 将数据传递给展示组件
+
+### 页面组件
+- 编排数据和布局
+- 不包含业务逻辑
+- 使用布局组件（由 App.tsx 统一管理）
+
+## 状态管理规范
+
+### UI 状态
+- 使用 `@shared/state/ui-store`
+- 包括：主题模式、侧边栏状态等
+- 与业务逻辑状态严格分离
+
+### 业务状态
+- 在功能模块内部管理
+- 或使用专门的状态管理方案（如 React Query）
+
+### 服务器状态
+- 使用 React Query 或其他数据获取库
+- 与 UI 状态分离
+
+## 样式规范
+
+- **禁止**：内联样式、硬编码颜色值、硬编码间距
+- **必须**：使用设计系统令牌、通过主题系统访问颜色、使用 spacing tokens
+
+## 示例
+
+### ✅ 正确示例
+
+```typescript
+import { spacing } from '@design-system/tokens';
+import { useTheme } from '@mui/material/styles';
+
+function MyComponent() {
+  const theme = useTheme();
+  
+  return (
+    <Box sx={{ p: spacing.md, color: theme.palette.primary.main }}>
+      Content
+    </Box>
+  );
+}
+```
+
+### ❌ 错误示例
+
+```typescript
+function MyComponent() {
+  return (
+    <Box sx={{ padding: '16px', color: '#2196F3' }}>
+      Content
+    </Box>
+  );
+}
+```
+
+## 违反规范的后果
+
+违反规范的代码将不被接受，必须重构以符合规范。
+
