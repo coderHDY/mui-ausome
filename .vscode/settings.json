@@ -9,6 +9,21 @@
     "chat.tools.terminal.autoApprove": {
         ".specify/scripts/bash/": true,
         ".specify/scripts/powershell/": true
-    }
+    },
+    // 调试相关配置
+    "debug.javascript.autoAttachFilter": "smart",
+    "debug.javascript.terminalOptions": {
+        "skipFiles": ["<node_internals>/**"]
+    },
+    "debug.javascript.usePreview": true,
+    "debug.allowBreakpointsEverywhere": true,
+    "debug.inlineValues": "on",
+    "debug.showBreakpointsInOverviewRuler": true,
+    "debug.toolBarLocation": "floating",
+    // TypeScript 调试配置
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    // 源代码映射配置
+    "debug.javascript.suggestPrettyPrinting": false
 }
 

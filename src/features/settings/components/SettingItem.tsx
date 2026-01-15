@@ -52,10 +52,10 @@ export function SettingItem({
   return (
     <Box
       sx={{
-        py: spacing.md,
-        px: spacing.lg,
+        py: spacing.xs,
+        px: spacing.md,
         mb: spacing.md,
-        borderRadius: radius.md,
+        borderRadius: radius.sm,
         backgroundColor: alpha(theme.palette.action.hover, 0.03),
         border: `1px solid ${alpha(theme.palette.divider, 0.5)}`,
         transition: theme.transitions.create(['background-color', 'border-color'], {
@@ -104,7 +104,7 @@ export function SettingItem({
           sx={{
             display: 'flex',
             alignItems: 'center',
-            minWidth: { xs: '100%', sm: 200 },
+            minWidth: { md: 70 },
           }}
         >
           {type === 'switch' && (

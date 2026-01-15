@@ -10,12 +10,15 @@ import type { ThemeMode } from '@design-system/theme';
 interface UIState {
   themeMode: ThemeMode;
   sidebarOpen: boolean;
+  sidebarCollapsed: boolean; // PC版本侧边栏折叠状态
 }
 
 interface UIActions {
   setThemeMode: (mode: ThemeMode) => void;
   toggleSidebar: () => void;
   setSidebarOpen: (open: boolean) => void;
+  toggleSidebarCollapsed: () => void;
+  setSidebarCollapsed: (collapsed: boolean) => void;
 }
 
 type UIStore = UIState & UIActions;
@@ -26,15 +29,21 @@ export const useUIStore = create<UIStore>()(
       // State
       themeMode: 'light',
       sidebarOpen: true,
+      sidebarCollapsed: false,
 
       // Actions
       setThemeMode: (mode) => set({ themeMode: mode }),
       toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
       setSidebarOpen: (open) => set({ sidebarOpen: open }),
+      toggleSidebarCollapsed: () => set((state) => ({ sidebarCollapsed: !state.sidebarCollapsed })),
+      setSidebarCollapsed: (collapsed) => set({ sidebarCollapsed: collapsed }),
     }),
     {
       name: 'ui-storage',
-      partialize: (state) => ({ themeMode: state.themeMode }),
+      partialize: (state) => ({ 
+        themeMode: state.themeMode,
+        sidebarCollapsed: state.sidebarCollapsed,
+      }),
     }
   )
 );

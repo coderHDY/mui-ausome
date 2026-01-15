@@ -79,7 +79,7 @@ export function UserTable({ users, onEdit, onDelete }: UserTableProps) {
       elevation={0}
       sx={{
         border: `1px solid ${theme.palette.divider}`,
-        borderRadius: radius.lg,
+        borderRadius: radius.sm,
         overflow: 'hidden',
         '& .MuiTable-root': {
           minWidth: 800,

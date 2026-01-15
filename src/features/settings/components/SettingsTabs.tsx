@@ -43,7 +43,6 @@ export function SettingsTabs({ tabs }: SettingsTabsProps) {
         onChange={handleChange}
         sx={{
           borderBottom: `2px solid ${theme.palette.divider}`,
-          mb: spacing.lg,
           '& .MuiTabs-indicator': {
             height: 3,
             borderRadius: `${radius.sm} ${radius.sm} 0 0`,

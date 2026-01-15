@@ -10,6 +10,7 @@ import {
   Button,
   IconButton,
   Paper,
+  Typography,
 } from '@mui/material';
 import { alpha, useTheme } from '@mui/material/styles';
 import {
@@ -54,10 +55,10 @@ export function UserFilters({
     <Paper
       elevation={0}
       sx={{
-        p: spacing.lg,
-        mb: spacing.lg,
+        p: spacing.sm,
+        mb: spacing.md,
         border: `1px solid ${theme.palette.divider}`,
-        borderRadius: radius.lg,
+        borderRadius: radius.sm,
         backgroundColor: alpha(theme.palette.background.paper, 0.8),
         backdropFilter: 'blur(10px)',
       }}

@@ -1,4 +1,4 @@
-import { Grid, Paper, Typography, Box } from '@mui/material';
+import { Grid, Paper, Typography, Box, useTheme } from '@mui/material';
 import { TrendingUp, People, ShoppingCart, AttachMoney } from '@mui/icons-material';
 import { spacing } from '@design-system/tokens';
 import { type ReactNode } from 'react';
@@ -15,11 +15,12 @@ interface StatCardProps {
 }
 
 function StatCard({ title, value, icon, color }: StatCardProps) {
+  const theme = useTheme();
   return (
     <Paper
       elevation={2}
       sx={{
-        p: spacing.md,
+        p: { xs: spacing.xs, lg: spacing.sm }, // 响应式padding：手机小，平板中等，PC大
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
@@ -61,7 +62,7 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
   return (
     <Grid container spacing={spacing.md}>
       {stats.map((stat, index) => (
-        <Grid item xs={12} sm={6} md={3} key={index}>
+        <Grid item xs={12} sm={6} lg={3} key={index}>
           <StatCard {...stat} />
         </Grid>
       ))}

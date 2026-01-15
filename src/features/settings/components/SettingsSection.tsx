@@ -39,10 +39,9 @@ export function SettingsSection({
     <Paper
       elevation={0}
       sx={{
-        p: spacing.lg,
-        mb: spacing.lg,
+        p: spacing.sm,
         border: `1px solid ${theme.palette.divider}`,
-        borderRadius: radius.lg,
+        borderRadius: radius.sm,
         background: `linear-gradient(135deg, ${theme.palette.background.paper} 0%, ${alpha(theme.palette.primary.main, 0.02)} 100%)`,
         position: 'relative',
         overflow: 'hidden',
@@ -71,7 +70,6 @@ export function SettingsSection({
           display: 'flex',
           alignItems: 'flex-start',
           gap: spacing.md,
-          mb: spacing.md,
         }}
       >
         {icon && (
@@ -115,7 +113,7 @@ export function SettingsSection({
         </Box>
       </Box>
 
-      <Divider sx={{ my: spacing.md, borderColor: alpha(theme.palette.divider, 0.5) }} />
+      <Divider sx={{ my: spacing.sm, borderColor: alpha(theme.palette.divider, 0.5) }} />
 
       {/* 内容区域 */}
       <Box>{children}</Box>

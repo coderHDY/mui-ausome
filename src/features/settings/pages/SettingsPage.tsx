@@ -239,8 +239,7 @@ export function SettingsPage() {
       {/* 页面标题 */}
       <Box
         sx={{
-          mb: spacing.xl,
-          pb: spacing.lg,
+          mb: spacing.sm,
           borderBottom: `2px solid ${theme.palette.divider}`,
         }}
       >
@@ -271,8 +270,8 @@ export function SettingsPage() {
         sx={{
           position: 'sticky',
           bottom: 0,
-          py: spacing.lg,
-          mt: spacing.xl,
+          p: spacing.xs,
+          mt: spacing.md,
           backgroundColor: alpha(theme.palette.background.paper, 0.95),
           backdropFilter: 'blur(10px)',
           borderTop: `1px solid ${theme.palette.divider}`,
