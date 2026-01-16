@@ -151,6 +151,7 @@ export function AppLayout({
             py: 0, // 减少高度
             flexShrink: 0, // 防止头部区域被压缩
             minHeight: 40, // 减少最小高度
+            pr: sidebarCollapsed && !isMobile ? "0px" : theme.spacing(2) // spacing.xs (4) * 4px = 16px，使用 theme.spacing(1) = 4px
           }}
         >
           {isMobile ? (
@@ -163,6 +164,7 @@ export function AppLayout({
                   backgroundColor: alpha(theme.palette.action.hover, 0.5),
                   color: theme.palette.text.primary,
                 },
+                mr: spacing.md,
                 transition: theme.transitions.create(
                   ["background-color", "color"],
                   {

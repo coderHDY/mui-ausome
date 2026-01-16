@@ -302,7 +302,7 @@ export function SettingsPage() {
           startIcon={<SaveIcon />}
           onClick={handleSave}
           sx={{
-            px: spacing.xl,
+            px: spacing.xs,
             boxShadow: theme.shadows[4],
             "&:hover": {
               boxShadow: theme.shadows[8],
