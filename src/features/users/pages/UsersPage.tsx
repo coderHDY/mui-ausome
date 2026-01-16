@@ -3,7 +3,7 @@ import { Container, Typography, Box, Fab, Tooltip } from '@mui/material';
 import { Add as AddIcon } from '@mui/icons-material';
 import { UserTable, UserFilters, UserStats, type User } from '../components';
 import { spacing } from '@design-system/tokens';
-import { alpha, useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 
 /**
  * 用户管理页面

@@ -1,5 +1,4 @@
-import { Grid, Paper, Typography, Box, useTheme } from '@mui/material';
-import { TrendingUp, People, ShoppingCart, AttachMoney } from '@mui/icons-material';
+import { Grid, Paper, Typography, Box } from '@mui/material';
 import { spacing } from '@design-system/tokens';
 import { type ReactNode } from 'react';
 
@@ -15,7 +14,6 @@ interface StatCardProps {
 }
 
 function StatCard({ title, value, icon, color }: StatCardProps) {
-  const theme = useTheme();
   return (
     <Paper
       elevation={2}
@@ -70,31 +68,4 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
   );
 }
 
-// 默认数据示例（实际应用中应该从页面层传入）
-export const defaultStats = [
-  {
-    title: '总用户数',
-    value: '1,234',
-    icon: <People />,
-    color: 'primary' as const,
-  },
-  {
-    title: '订单数',
-    value: '567',
-    icon: <ShoppingCart />,
-    color: 'success' as const,
-  },
-  {
-    title: '总收入',
-    value: '¥89,012',
-    icon: <AttachMoney />,
-    color: 'warning' as const,
-  },
-  {
-    title: '增长率',
-    value: '+12.5%',
-    icon: <TrendingUp />,
-    color: 'error' as const,
-  },
-];
 

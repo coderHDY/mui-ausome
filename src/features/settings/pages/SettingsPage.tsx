@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import { Container, Typography, Box, Button, Stack, Chip } from '@mui/material';
-import { alpha, useTheme } from '@mui/material/styles';
+import { useState } from "react";
+import { Container, Typography, Box, Button, Stack, Chip } from "@mui/material";
+import { alpha, useTheme } from "@mui/material/styles";
 import {
   Notifications as NotificationsIcon,
   Security as SecurityIcon,
   Palette as PaletteIcon,
   Language as LanguageIcon,
   Save as SaveIcon,
-} from '@mui/icons-material';
-import { SettingsSection, SettingItem, SettingsTabs } from '../components';
-import { spacing } from '@design-system/tokens';
+} from "@mui/icons-material";
+import { SettingsSection, SettingItem, SettingsTabs } from "../components";
+import { spacing } from "@design-system/tokens";
 
 /**
  * 设置页面
@@ -29,26 +29,26 @@ export function SettingsPage() {
 
   // 安全设置
   const [twoFactorAuth, setTwoFactorAuth] = useState(false);
-  const [sessionTimeout, setSessionTimeout] = useState('30');
-  const [passwordPolicy, setPasswordPolicy] = useState('medium');
+  const [sessionTimeout, setSessionTimeout] = useState("30");
+  const [passwordPolicy, setPasswordPolicy] = useState("medium");
 
   // 外观设置
-  const [themeMode, setThemeMode] = useState('light');
+  const [themeMode, setThemeMode] = useState("light");
   const [compactMode, setCompactMode] = useState(false);
   const [animations, setAnimations] = useState(true);
 
   // 语言设置
-  const [language, setLanguage] = useState('zh-CN');
-  const [dateFormat, setDateFormat] = useState('YYYY-MM-DD');
-  const [timezone, setTimezone] = useState('Asia/Shanghai');
+  const [language, setLanguage] = useState("zh-CN");
+  const [dateFormat, setDateFormat] = useState("YYYY-MM-DD");
+  const [timezone, setTimezone] = useState("Asia/Shanghai");
 
   const handleSave = () => {
-    console.log('Settings saved');
+    console.log("Settings saved");
   };
 
   const tabs = [
     {
-      label: '通知',
+      label: "通知",
       content: (
         <SettingsSection
           title="通知设置"
@@ -80,7 +80,7 @@ export function SettingsPage() {
       ),
     },
     {
-      label: '安全',
+      label: "安全",
       content: (
         <>
           <SettingsSection
@@ -102,10 +102,10 @@ export function SettingsPage() {
               value={sessionTimeout}
               onChange={setSessionTimeout}
               options={[
-                { label: '15分钟', value: '15' },
-                { label: '30分钟', value: '30' },
-                { label: '1小时', value: '60' },
-                { label: '2小时', value: '120' },
+                { label: "15分钟", value: "15" },
+                { label: "30分钟", value: "30" },
+                { label: "1小时", value: "60" },
+                { label: "2小时", value: "120" },
               ]}
             />
             <SettingItem
@@ -115,9 +115,9 @@ export function SettingsPage() {
               value={passwordPolicy}
               onChange={setPasswordPolicy}
               options={[
-                { label: '低', value: 'low' },
-                { label: '中', value: 'medium' },
-                { label: '高', value: 'high' },
+                { label: "低", value: "low" },
+                { label: "中", value: "medium" },
+                { label: "高", value: "high" },
               ]}
             />
           </SettingsSection>
@@ -125,7 +125,7 @@ export function SettingsPage() {
       ),
     },
     {
-      label: '外观',
+      label: "外观",
       content: (
         <SettingsSection
           title="外观设置"
@@ -139,9 +139,9 @@ export function SettingsPage() {
             value={themeMode}
             onChange={setThemeMode}
             options={[
-              { label: '浅色', value: 'light' },
-              { label: '深色', value: 'dark' },
-              { label: '自定义', value: 'custom' },
+              { label: "浅色", value: "light" },
+              { label: "深色", value: "dark" },
+              { label: "自定义", value: "custom" },
             ]}
           />
           <SettingItem
@@ -165,17 +165,27 @@ export function SettingsPage() {
           >
             <Stack direction="row" spacing={spacing.sm}>
               <Chip
-                label={themeMode === 'light' ? '浅色' : themeMode === 'dark' ? '深色' : '自定义'}
+                label={
+                  themeMode === "light"
+                    ? "浅色"
+                    : themeMode === "dark"
+                    ? "深色"
+                    : "自定义"
+                }
                 sx={{
                   backgroundColor: alpha(theme.palette.primary.main, 0.1),
                   color: theme.palette.primary.main,
                 }}
               />
               <Chip
-                label={compactMode ? '紧凑模式' : '标准模式'}
+                label={compactMode ? "紧凑模式" : "标准模式"}
                 sx={{
-                  backgroundColor: alpha(theme.palette.secondary?.main || theme.palette.info.main, 0.1),
-                  color: theme.palette.secondary?.main || theme.palette.info.main,
+                  backgroundColor: alpha(
+                    theme.palette.secondary?.main || theme.palette.info.main,
+                    0.1
+                  ),
+                  color:
+                    theme.palette.secondary?.main || theme.palette.info.main,
                 }}
               />
             </Stack>
@@ -184,7 +194,7 @@ export function SettingsPage() {
       ),
     },
     {
-      label: '语言与地区',
+      label: "语言与地区",
       content: (
         <SettingsSection
           title="语言和地区设置"
@@ -198,10 +208,10 @@ export function SettingsPage() {
             value={language}
             onChange={setLanguage}
             options={[
-              { label: '简体中文', value: 'zh-CN' },
-              { label: '繁体中文', value: 'zh-TW' },
-              { label: 'English', value: 'en-US' },
-              { label: '日本語', value: 'ja-JP' },
+              { label: "简体中文", value: "zh-CN" },
+              { label: "繁体中文", value: "zh-TW" },
+              { label: "English", value: "en-US" },
+              { label: "日本語", value: "ja-JP" },
             ]}
           />
           <SettingItem
@@ -211,9 +221,9 @@ export function SettingsPage() {
             value={dateFormat}
             onChange={setDateFormat}
             options={[
-              { label: 'YYYY-MM-DD', value: 'YYYY-MM-DD' },
-              { label: 'MM/DD/YYYY', value: 'MM/DD/YYYY' },
-              { label: 'DD/MM/YYYY', value: 'DD/MM/YYYY' },
+              { label: "YYYY-MM-DD", value: "YYYY-MM-DD" },
+              { label: "MM/DD/YYYY", value: "MM/DD/YYYY" },
+              { label: "DD/MM/YYYY", value: "DD/MM/YYYY" },
             ]}
           />
           <SettingItem
@@ -223,10 +233,10 @@ export function SettingsPage() {
             value={timezone}
             onChange={setTimezone}
             options={[
-              { label: 'Asia/Shanghai (UTC+8)', value: 'Asia/Shanghai' },
-              { label: 'Asia/Tokyo (UTC+9)', value: 'Asia/Tokyo' },
-              { label: 'America/New_York (UTC-5)', value: 'America/New_York' },
-              { label: 'Europe/London (UTC+0)', value: 'Europe/London' },
+              { label: "Asia/Shanghai (UTC+8)", value: "Asia/Shanghai" },
+              { label: "Asia/Tokyo (UTC+9)", value: "Asia/Tokyo" },
+              { label: "America/New_York (UTC-5)", value: "America/New_York" },
+              { label: "Europe/London (UTC+0)", value: "Europe/London" },
             ]}
           />
         </SettingsSection>
@@ -248,10 +258,14 @@ export function SettingsPage() {
           component="h1"
           sx={{
             fontWeight: theme.typography.fontWeightBold,
-            background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary?.main || theme.palette.primary.dark} 100%)`,
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
+            background: `linear-gradient(135deg, ${
+              theme.palette.primary.main
+            } 0%, ${
+              theme.palette.secondary?.main || theme.palette.primary.dark
+            } 100%)`,
+            backgroundClip: "text",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
             mb: spacing.sm,
           }}
         >
@@ -268,15 +282,15 @@ export function SettingsPage() {
       {/* 保存按钮 */}
       <Box
         sx={{
-          position: 'sticky',
+          position: "sticky",
           bottom: 0,
           p: spacing.xs,
           mt: spacing.md,
           backgroundColor: alpha(theme.palette.background.paper, 0.95),
-          backdropFilter: 'blur(10px)',
+          backdropFilter: "blur(10px)",
           borderTop: `1px solid ${theme.palette.divider}`,
-          display: 'flex',
-          justifyContent: 'flex-end',
+          display: "flex",
+          justifyContent: "flex-end",
           gap: spacing.md,
         }}
       >
@@ -290,7 +304,7 @@ export function SettingsPage() {
           sx={{
             px: spacing.xl,
             boxShadow: theme.shadows[4],
-            '&:hover': {
+            "&:hover": {
               boxShadow: theme.shadows[8],
             },
           }}
@@ -301,4 +315,3 @@ export function SettingsPage() {
     </Container>
   );
 }
-
