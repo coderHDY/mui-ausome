@@ -3,6 +3,7 @@ import { ThemeProvider } from '@shared/components';
 import { DashboardPage } from '@features/dashboard';
 import { UsersPage } from '@features/users';
 import { SettingsPage } from '@features/settings';
+import { NotFoundPage } from '@features/errors';
 import { NavigationMenu } from '@features/navigation';
 import { AppLayout } from '@shared/layout';
 
@@ -37,6 +38,8 @@ function App() {
             <Route path="/users" element={<UsersPage />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Route>
+          {/* 兜底路由：捕获所有未匹配的路径 */}
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
