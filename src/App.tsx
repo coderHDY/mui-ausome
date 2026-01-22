@@ -5,6 +5,7 @@ import { UsersPage } from '@features/users';
 import { SettingsPage } from '@features/settings';
 import { NotFoundPage } from '@features/errors';
 import { NavigationMenu } from '@features/navigation';
+import { DataPage } from '@features/data';
 import { AppLayout } from '@shared/layout';
 
 /**
@@ -35,6 +36,7 @@ function App() {
         <Routes>
           <Route element={<LayoutRoute />}>
             <Route path="/" element={<DashboardPage />} />
+            <Route path="/data" element={<DataPage />} />
             <Route path="/users" element={<UsersPage />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Route>

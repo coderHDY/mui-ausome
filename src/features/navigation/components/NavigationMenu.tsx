@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip } from '@mui/material';
-import { Dashboard, Settings, People } from '@mui/icons-material';
+import { Dashboard, Settings, People, Storage } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useUIStore } from '@shared/state';
 import { useMediaQuery, useTheme } from '@mui/material';
@@ -26,6 +26,11 @@ const navItems: NavItem[] = [
     label: '用户管理',
     path: '/users',
     icon: <People />,
+  },
+  {
+    label: '数据管理',
+    path: '/data',
+    icon: <Storage />,
   },
   {
     label: '设置',
