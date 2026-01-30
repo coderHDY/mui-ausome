@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet, Navigate } from 'react-router-dom';
 import { ThemeProvider } from '@shared/components';
 import { DashboardPage } from '@features/dashboard';
 import { UsersPage } from '@features/users';
@@ -7,6 +7,8 @@ import { NotFoundPage } from '@features/errors';
 import { NavigationMenu } from '@features/navigation';
 import { DataPage } from '@features/data';
 import { AppLayout } from '@shared/layout';
+import { LoginPage, RegisterPage } from '@features/auth/pages';
+import { ProtectedRoute } from '@shared/components/ProtectedRoute';
 
 /**
  * 布局路由组件
@@ -34,13 +36,25 @@ function App() {
         }}
       >
         <Routes>
-          <Route element={<LayoutRoute />}>
+          {/* Auth routes - no layout wrapper */}
+          <Route path="/auth/login" element={<LoginPage />} />
+          <Route path="/auth/register" element={<RegisterPage />} />
+
+          {/* Protected routes with layout */}
+          <Route
+            element={
+              <ProtectedRoute>
+                <LayoutRoute />
+              </ProtectedRoute>
+            }
+          >
             <Route path="/" element={<DashboardPage />} />
             <Route path="/data" element={<DataPage />} />
             <Route path="/users" element={<UsersPage />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Route>
-          {/* 兜底路由：捕获所有未匹配的路径 */}
+
+          {/* Redirect unknown paths to 404 */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
