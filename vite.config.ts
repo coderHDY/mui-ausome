@@ -14,6 +14,7 @@ export default defineConfig({
       '@design-system': resolve(__dirname, './src/design-system'),
       '@features': resolve(__dirname, './src/features'),
       '@shared': resolve(__dirname, './src/shared'),
+      '@specs': resolve(__dirname, './specs'),
     },
   },
   server: {

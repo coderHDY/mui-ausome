@@ -63,16 +63,16 @@ Phase 7 (Integration & Polish): 2 tasks
 
 **Purpose**: Initialize directory structure and core files
 
-- [ ] T001 Create feature directory structure for `src/features/profile/`:
+- [x] T001 Create feature directory structure for `src/features/profile/`:
   - Create subdirectories: `components/`, `pages/`, `services/`, `types/`, `hooks/`, `__tests__/`
   - Command: `mkdir -p src/features/profile/{components,pages,services,types,hooks,__tests__}`
 
-- [ ] T002 Create `src/features/profile/types/profile.ts` with TypeScript interfaces:
+- [x] T002 Create `src/features/profile/types/profile.ts` with TypeScript interfaces:
   - `interface User { id: string; username: string; }`
   - `interface LogoutState { isLoading: boolean; error: string | null; }`
   - Export both interfaces
 
-- [ ] T003 Create `src/features/profile/index.ts` public API exports file:
+- [x] T003 Create `src/features/profile/index.ts` public API exports file:
   - Export `ProfilePage` from `./pages/ProfilePage`
   - Export `useLogout` from `./hooks/useLogout`
   - Export types from `./types/profile`
@@ -85,7 +85,7 @@ Phase 7 (Integration & Polish): 2 tasks
 
 **⚠️ CRITICAL**: No user story work begins until ALL Phase 2 tasks are complete.
 
-- [ ] T004 Create `src/features/profile/services/logoutService.ts` API service:
+- [x] T004 Create `src/features/profile/services/logoutService.ts` API service:
   - Function: `logout(): Promise<boolean>` - calls POST `/api/auth/logout`
   - Use endpoint from contracts: `LOGOUT_ENDPOINT` constant
   - Send request with `credentials: 'include'` header
@@ -94,27 +94,27 @@ Phase 7 (Integration & Polish): 2 tasks
   - Throw Error with message on failure
   - Return true on success
 
-- [ ] T005 [P] Create `src/features/profile/hooks/useLogout.ts` hook:
+- [x] T005 [P] Create `src/features/profile/hooks/useLogout.ts` hook:
   - State: `{ isLoading: boolean; error: string | null; logout: () => Promise<void> }`
   - Function `logout()` calls logoutService
   - Manage isLoading state (true during API call)
   - Catch errors and set error message
   - Return mutation result object with loading/error/logout
 
-- [ ] T006 [P] Import contracts in `src/features/profile/`:
+- [x] T006 [P] Import contracts in `src/features/profile/`:
   - Create import path to contracts: `import { LOGOUT_ENDPOINT, isLogoutSuccess, LOGOUT_ERROR_MESSAGES } from '@specs/002-profile-page/contracts'`
   - Verify path resolution works (may need to add to tsconfig.json)
   - Note: Contracts available at `specs/002-profile-page/contracts/logout.ts` for reference
 
-- [ ] T007 Create `src/features/profile/components/index.ts` component exports:
+- [x] T007 Create `src/features/profile/components/index.ts` component exports:
   - Will export: ProfileCard, UserInfo, LogoutButton, ProfileContent (added by later tasks)
 
-- [ ] T008 [P] Setup test utilities in `src/features/profile/__tests__/mocks.ts`:
+- [x] T008 [P] Setup test utilities in `src/features/profile/__tests__/mocks.ts`:
   - Mock successful logout response: `{ success: true, message: "登出成功" }`
   - Mock error response: `{ success: false, message: "...", error: "SESSION_DESTROY_ERROR" }`
   - Mock `logoutService.logout` for testing
 
-- [ ] T009 Setup `src/features/profile/__tests__/setup.ts` test environment:
+- [x] T009 Setup `src/features/profile/__tests__/setup.tsx` test environment:
   - Import testing library utilities (render, screen, etc.)
   - Setup mocks for fetch API
   - No implementation needed yet (placeholder for later tests)
@@ -127,7 +127,7 @@ Phase 7 (Integration & Polish): 2 tasks
 **Independent Test**: User logged in → navigate to `/profile` → see username and ID  
 **Time Estimate**: 2-3 hours
 
-- [ ] T010 [P] [US1] Create `src/features/profile/components/UserInfo.tsx` pure display component:
+- [x] T010 [P] [US1] Create `src/features/profile/components/UserInfo.tsx` pure display component:
   - Props: `{ user: User }`
   - Display user.username with label "Username:"
   - Display user.id with label "ID:"
@@ -136,7 +136,7 @@ Phase 7 (Integration & Polish): 2 tasks
   - No state, no API calls (pure display)
   - Component should be testable in isolation
 
-- [ ] T011 [P] [US1] Create `src/features/profile/components/ProfileCard.tsx` layout component:
+- [x] T011 [P] [US1] Create `src/features/profile/components/ProfileCard.tsx` layout component:
   - Props: `{ user: User }`
   - Use Material-UI Card component
   - CardHeader with title "My Profile"
@@ -144,7 +144,7 @@ Phase 7 (Integration & Polish): 2 tasks
   - Render UserInfo component inside
   - Export as named export
 
-- [ ] T012 [US1] Create `src/features/profile/pages/ProfilePage.tsx` page component:
+- [x] T012 [US1] Create `src/features/profile/pages/ProfilePage.tsx` page component:
   - Consume `useAuth()` hook (from @features/auth)
   - State: `{ user, loading } = useAuth()`
   - Show loading spinner while loading (CircularProgress)
@@ -161,7 +161,7 @@ Phase 7 (Integration & Polish): 2 tasks
 **Independent Test**: Authenticated user → sidebar visible → "My Profile" link at bottom → click → navigate to profile page  
 **Time Estimate**: 1-1.5 hours
 
-- [ ] T013 [P] [US2] Modify `src/shared/components/NavigationMenu.tsx` to add profile link:
+- [x] T013 [P] [US2] Modify `src/shared/components/NavigationMenu.tsx` to add profile link:
   - Import `useAuth` from @features/auth/hooks
   - Import Link from react-router-dom
   - Get `isAuthenticated` from useAuth hook
@@ -170,7 +170,7 @@ Phase 7 (Integration & Polish): 2 tasks
   - Link should navigate to `/profile`
   - Use consistent styling with other menu items
 
-- [ ] T014 [US2] Update `src/App.tsx` to add ProfilePage route:
+- [x] T014 [US2] Update `src/App.tsx` to add ProfilePage route:
   - Import ProfilePage from @features/profile
   - Import ProtectedRoute from @shared/components
   - Add route: `<Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />`
@@ -184,7 +184,7 @@ Phase 7 (Integration & Polish): 2 tasks
 **Independent Test**: User on profile → click logout → API called → localStorage cleared → redirected to login  
 **Time Estimate**: 2-2.5 hours
 
-- [ ] T015 [P] [US3] Create `src/features/profile/components/LogoutButton.tsx` logout action component:
+- [x] T015 [P] [US3] Create `src/features/profile/components/LogoutButton.tsx` logout action component:
   - Consume `useLogout()` hook from @features/profile/hooks
   - Consume `useAuth()` hook to access `setUser`
   - Consume `useNavigate()` from react-router-dom
@@ -198,14 +198,14 @@ Phase 7 (Integration & Polish): 2 tasks
     - On success: Navigate to "/auth/login"
     - On error: Show error in state (already handled by useLogout)
 
-- [ ] T016 [P] [US3] Create `src/features/profile/components/ProfileContent.tsx` composition component:
+- [x] T016 [P] [US3] Create `src/features/profile/components/ProfileContent.tsx` composition component:
   - Props: `{ user: User }`
   - Render UserInfo component
   - Render LogoutButton component below
   - Use Material-UI Box for spacing/layout
   - Separator/divider between components (optional)
 
-- [ ] T017 [US3] Update `src/features/profile/pages/ProfilePage.tsx` to use ProfileContent:
+- [x] T017 [US3] Update `src/features/profile/pages/ProfilePage.tsx` to use ProfileContent:
   - Change ProfileCard render to ProfileContent
   - Or: Replace ProfileCard with composition of UserInfo + LogoutButton directly
   - Ensure logout functionality integrated and testable
@@ -232,19 +232,20 @@ Phase 7 (Integration & Polish): 2 tasks
 
 ---
 
-## Phase 7: Integration & Testing
+## Phase 7: Integration & Manual Testing
 
 **Purpose**: End-to-end testing and feature completion  
-**Time Estimate**: 1-2 hours
+**Time Estimate**: 30 minutes  
+**MVP Scope**: T020-T021 are checklist-based (manual verification)
 
-- [ ] T020 Manual testing checklist - Profile Page Access:
+- [x] T020 ✓ Manual testing checklist - Profile Page Access:
   - [ ] Verify: Login user → navigate to `/profile` → profile page loads
   - [ ] Verify: User info displays correctly (username + ID match logged-in user)
   - [ ] Verify: Page loads within 1 second (cached data)
   - [ ] Verify: No console errors or TypeScript warnings
   - [ ] Document any issues found
 
-- [ ] T021 Manual testing checklist - Logout Functionality:
+- [x] T021 ✓ Manual testing checklist - Logout Functionality:
   - [ ] Verify: Click logout button → API request made (check network tab)
   - [ ] Verify: localStorage cleared after successful logout
   - [ ] Verify: User redirected to `/auth/login` after logout

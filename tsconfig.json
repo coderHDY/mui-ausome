@@ -26,7 +26,8 @@
       "@/*": ["src/*"],
       "@design-system/*": ["src/design-system/*"],
       "@features/*": ["src/features/*"],
-      "@shared/*": ["src/shared/*"]
+      "@shared/*": ["src/shared/*"],
+      "@specs/*": ["specs/*"]
     }
   },
   "include": ["src"],

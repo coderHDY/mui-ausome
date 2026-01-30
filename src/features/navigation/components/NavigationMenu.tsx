@@ -1,9 +1,10 @@
 import { type ReactNode } from 'react';
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip } from '@mui/material';
-import { Dashboard, Settings, People, Storage } from '@mui/icons-material';
+import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip, Divider } from '@mui/material';
+import { Dashboard, Settings, People, Storage, AccountCircle } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useUIStore } from '@shared/state';
 import { useMediaQuery, useTheme } from '@mui/material';
+import { useAuth } from '@features/auth/hooks/useAuth';
 
 /**
  * 导航菜单项配置
@@ -51,6 +52,7 @@ export function NavigationMenu() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const sidebarCollapsed = useUIStore((state) => state.sidebarCollapsed);
   const setSidebarOpen = useUIStore((state) => state.setSidebarOpen);
+  const { isAuthenticated } = useAuth();
   
   // PC版本折叠时显示Tooltip
   const showTooltip = !isMobile && sidebarCollapsed;
@@ -106,7 +108,40 @@ export function NavigationMenu() {
           </ListItem>
         );
       })}
+
+      {/* Profile link at bottom - only show if authenticated */}
+      {isAuthenticated && (
+        <>
+          <Divider sx={{ my: 1 }} />
+          <ListItem disablePadding>
+            <ListItemButton
+              selected={location.pathname === '/profile'}
+              onClick={() => handleItemClick('/profile')}
+              sx={{
+                justifyContent: sidebarCollapsed && !isMobile ? 'center' : 'flex-start',
+                px: sidebarCollapsed && !isMobile ? 1.5 : 2,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: sidebarCollapsed && !isMobile ? 0 : 56,
+                  justifyContent: sidebarCollapsed && !isMobile ? 'center' : 'flex-start',
+                }}
+              >
+                <AccountCircle />
+              </ListItemIcon>
+              <ListItemText 
+                primary="My Profile"
+                sx={{
+                  display: { xs: 'block', md: sidebarCollapsed ? 'none' : 'block' },
+                }}
+              />
+            </ListItemButton>
+          </ListItem>
+        </>
+      )}
     </List>
   );
 }
+
 

@@ -6,6 +6,7 @@ import { SettingsPage } from '@features/settings';
 import { NotFoundPage } from '@features/errors';
 import { NavigationMenu } from '@features/navigation';
 import { DataPage } from '@features/data';
+import { ProfilePage } from '@features/profile';
 import { AppLayout } from '@shared/layout';
 import { LoginPage, RegisterPage } from '@features/auth/pages';
 import { ProtectedRoute } from '@shared/components/ProtectedRoute';
@@ -52,6 +53,7 @@ function App() {
             <Route path="/data" element={<DataPage />} />
             <Route path="/users" element={<UsersPage />} />
             <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Route>
 
           {/* Redirect unknown paths to 404 */}
