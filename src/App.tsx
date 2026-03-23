@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Outlet, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Outlet } from 'react-router-dom';
 import { ThemeProvider } from '@shared/components';
 import { DashboardPage } from '@features/dashboard';
 import { UsersPage } from '@features/users';
@@ -7,6 +7,7 @@ import { NotFoundPage } from '@features/errors';
 import { NavigationMenu } from '@features/navigation';
 import { DataPage } from '@features/data';
 import { ProfilePage } from '@features/profile';
+import { CopilotAwesomePage } from '@features/copilot';
 import { AppLayout } from '@shared/layout';
 import { LoginPage, RegisterPage } from '@features/auth/pages';
 import { ProtectedRoute } from '@shared/components/ProtectedRoute';
@@ -54,6 +55,7 @@ function App() {
             <Route path="/users" element={<UsersPage />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/copilot-awesome" element={<CopilotAwesomePage />} />
           </Route>
 
           {/* Redirect unknown paths to 404 */}
