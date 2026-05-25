@@ -1,0 +1,836 @@
+{
+  "id": "35:267",
+  "name": "モーダルテンプレート",
+  "type": "INSTANCE",
+  "layoutMode": "HORIZONTAL",
+  "counterAxisAlignItems": "CENTER",
+  "width": 1022,
+  "height": 669,
+  "fills": [],
+  "children": [
+    {
+      "id": "I35:267;81:2476",
+      "name": "Frame 6",
+      "type": "INSTANCE",
+      "layoutMode": "VERTICAL",
+      "primaryAxisAlignItems": "SPACE_BETWEEN",
+      "itemSpacing": 87,
+      "width": 200,
+      "height": 669,
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9686274528503418,
+            "g": 0.9686274528503418,
+            "b": 0.9764705896377563,
+            "a": 1
+          }
+        }
+      ],
+      "children": [
+        {
+          "id": "I35:267;81:2476;21:4955",
+          "name": "Frame 4",
+          "type": "FRAME",
+          "layoutMode": "VERTICAL",
+          "width": 200,
+          "height": 464,
+          "fills": [],
+          "children": [
+            {
+              "id": "I35:267;81:2476;21:4905",
+              "name": "Frame 2",
+              "type": "FRAME",
+              "layoutMode": "HORIZONTAL",
+              "counterAxisAlignItems": "CENTER",
+              "paddingLeft": 24,
+              "paddingTop": 16,
+              "itemSpacing": 10,
+              "width": 200,
+              "height": 48,
+              "fills": [],
+              "children": [
+                {
+                  "id": "I35:267;81:2476;21:4904",
+                  "name": "宛先を選択",
+                  "type": "TEXT",
+                  "width": 70,
+                  "height": 21,
+                  "characters": "宛先を選択",
+                  "style": {
+                    "fontSize": 14,
+                    "fontWeight": 700,
+                    "fontFamily": "Inter"
+                  },
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.20000000298023224,
+                        "g": 0.20000000298023224,
+                        "b": 0.22745098173618317,
+                        "a": 1
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "I35:267;81:2476;21:4944",
+              "name": "Frame 4",
+              "type": "FRAME",
+              "layoutMode": "VERTICAL",
+              "paddingLeft": 8,
+              "paddingRight": 8,
+              "paddingTop": 16,
+              "paddingBottom": 16,
+              "width": 200,
+              "height": 257,
+              "fills": [],
+              "children": [
+                {
+                  "id": "I35:267;81:2476;21:4940",
+                  "name": "左メニューリスト",
+                  "type": "INSTANCE",
+                  "layoutMode": "HORIZONTAL",
+                  "counterAxisAlignItems": "CENTER",
+                  "paddingLeft": 16,
+                  "paddingRight": 16,
+                  "paddingTop": 8,
+                  "paddingBottom": 8,
+                  "itemSpacing": 10,
+                  "width": 184,
+                  "height": 45,
+                  "fills": [],
+                  "children": [
+                    {
+                      "id": "I35:267;81:2476;21:4940;21:4931",
+                      "name": "内容",
+                      "type": "TEXT",
+                      "width": 152,
+                      "height": 29,
+                      "characters": "お気に入りの宛先",
+                      "style": {
+                        "fontSize": 14,
+                        "fontWeight": 400,
+                        "fontFamily": "Inter"
+                      },
+                      "fills": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0.20000000298023224,
+                            "g": 0.20000000298023224,
+                            "b": 0.22745098173618317,
+                            "a": 1
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "I35:267;81:2476;21:4942",
+                  "name": "左メニューリスト",
+                  "type": "INSTANCE",
+                  "layoutMode": "HORIZONTAL",
+                  "counterAxisAlignItems": "CENTER",
+                  "paddingLeft": 16,
+                  "paddingRight": 16,
+                  "paddingTop": 8,
+                  "paddingBottom": 8,
+                  "itemSpacing": 10,
+                  "width": 184,
+                  "height": 45,
+                  "fills": [],
+                  "children": [
+                    {
+                      "id": "I35:267;81:2476;21:4942;21:4931",
+                      "name": "内容",
+                      "type": "TEXT",
+                      "width": 152,
+                      "height": 29,
+                      "characters": "お気に入りの保サ課",
+                      "style": {
+                        "fontSize": 14,
+                        "fontWeight": 400,
+                        "fontFamily": "Inter"
+                      },
+                      "fills": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0.20000000298023224,
+                            "g": 0.20000000298023224,
+                            "b": 0.22745098173618317,
+                            "a": 1
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "I35:267;81:2476;81:599",
+                  "name": "左メニューリスト",
+                  "type": "INSTANCE",
+                  "layoutMode": "HORIZONTAL",
+                  "counterAxisAlignItems": "CENTER",
+                  "paddingLeft": 16,
+                  "paddingRight": 16,
+                  "paddingTop": 8,
+                  "paddingBottom": 8,
+                  "itemSpacing": 10,
+                  "width": 184,
+                  "height": 58,
+                  "fills": [],
+                  "children": [
+                    {
+                      "id": "I35:267;81:2476;81:599;21:4931",
+                      "name": "内容",
+                      "type": "TEXT",
+                      "width": 152,
+                      "height": 42,
+                      "characters": "お気に入りのバックオフィス",
+                      "style": {
+                        "fontSize": 14,
+                        "fontWeight": 400,
+                        "fontFamily": "Inter"
+                      },
+                      "fills": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0.20000000298023224,
+                            "g": 0.20000000298023224,
+                            "b": 0.22745098173618317,
+                            "a": 1
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "I35:267;81:2476;21:4945",
+                  "name": "左メニューリスト",
+                  "type": "INSTANCE",
+                  "layoutMode": "HORIZONTAL",
+                  "counterAxisAlignItems": "CENTER",
+                  "paddingLeft": 16,
+                  "paddingRight": 16,
+                  "paddingTop": 8,
+                  "paddingBottom": 8,
+                  "itemSpacing": 10,
+                  "width": 184,
+                  "height": 45,
+                  "fills": [],
+                  "children": [
+                    {
+                      "id": "I35:267;81:2476;21:4945;21:4931",
+                      "name": "内容",
+                      "type": "TEXT",
+                      "width": 152,
+                      "height": 29,
+                      "characters": "最近選択した宛先",
+                      "style": {
+                        "fontSize": 14,
+                        "fontWeight": 400,
+                        "fontFamily": "Inter"
+                      },
+                      "fills": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0.20000000298023224,
+                            "g": 0.20000000298023224,
+                            "b": 0.22745098173618317,
+                            "a": 1
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "I35:267;81:2476;21:4948",
+                  "name": "左メニューリスト",
+                  "type": "INSTANCE",
+                  "layoutMode": "HORIZONTAL",
+                  "counterAxisAlignItems": "CENTER",
+                  "paddingLeft": 16,
+                  "paddingRight": 16,
+                  "paddingTop": 8,
+                  "paddingBottom": 8,
+                  "itemSpacing": 10,
+                  "width": 184,
+                  "height": 45,
+                  "fills": [],
+                  "children": [
+                    {
+                      "id": "I35:267;81:2476;21:4948;21:4931",
+                      "name": "内容",
+                      "type": "TEXT",
+                      "width": 152,
+                      "height": 29,
+                      "characters": "DA部店1",
+                      "style": {
+                        "fontSize": 14,
+                        "fontWeight": 400,
+                        "fontFamily": "Inter"
+                      },
+                      "fills": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0.20000000298023224,
+                            "g": 0.20000000298023224,
+                            "b": 0.22745098173618317,
+                            "a": 1
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "I35:267;81:2476;22:45",
+                  "name": "左メニューリスト",
+                  "type": "INSTANCE",
+                  "layoutMode": "HORIZONTAL",
+                  "counterAxisAlignItems": "CENTER",
+                  "paddingLeft": 16,
+                  "paddingRight": 16,
+                  "paddingTop": 8,
+                  "paddingBottom": 8,
+                  "itemSpacing": 10,
+                  "width": 184,
+                  "height": 45,
+                  "fills": [],
+                  "children": [
+                    {
+                      "id": "I35:267;81:2476;22:45;21:4931",
+                      "name": "内容",
+                      "type": "TEXT",
+                      "width": 152,
+                      "height": 29,
+                      "characters": "DA代理店05",
+                      "style": {
+                        "fontSize": 14,
+                        "fontWeight": 400,
+                        "fontFamily": "Inter"
+                      },
+                      "fills": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0.20000000298023224,
+                            "g": 0.20000000298023224,
+                            "b": 0.22745098173618317,
+                            "a": 1
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "I35:267;81:2476;22:34",
+              "name": "Frame 5",
+              "type": "FRAME",
+              "layoutMode": "VERTICAL",
+              "paddingLeft": 8,
+              "paddingRight": 8,
+              "paddingTop": 16,
+              "paddingBottom": 16,
+              "width": 200,
+              "height": 159,
+              "fills": [],
+              "children": [
+                {
+                  "id": "I35:267;81:2476;22:35",
+                  "name": "左メニューリスト",
+                  "type": "INSTANCE",
+                  "layoutMode": "HORIZONTAL",
+                  "counterAxisAlignItems": "CENTER",
+                  "paddingLeft": 16,
+                  "paddingRight": 16,
+                  "paddingTop": 8,
+                  "paddingBottom": 8,
+                  "itemSpacing": 10,
+                  "width": 184,
+                  "height": 45,
+                  "fills": [],
+                  "children": [
+                    {
+                      "id": "I35:267;81:2476;22:35;21:4931",
+                      "name": "内容",
+                      "type": "TEXT",
+                      "width": 152,
+                      "height": 29,
+                      "characters": "全国の保サ課",
+                      "style": {
+                        "fontSize": 14,
+                        "fontWeight": 400,
+                        "fontFamily": "Inter"
+                      },
+                      "fills": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0.20000000298023224,
+                            "g": 0.20000000298023224,
+                            "b": 0.22745098173618317,
+                            "a": 1
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "I35:267;81:2476;22:38",
+                  "name": "左メニューリスト",
+                  "type": "INSTANCE",
+                  "layoutMode": "HORIZONTAL",
+                  "counterAxisAlignItems": "CENTER",
+                  "paddingLeft": 16,
+                  "paddingRight": 16,
+                  "paddingTop": 8,
+                  "paddingBottom": 8,
+                  "itemSpacing": 10,
+                  "width": 184,
+                  "height": 45,
+                  "fills": [],
+                  "children": [
+                    {
+                      "id": "I35:267;81:2476;22:38;21:4931",
+                      "name": "内容",
+                      "type": "TEXT",
+                      "width": 152,
+                      "height": 29,
+                      "characters": "全国の事務サポ",
+                      "style": {
+                        "fontSize": 14,
+                        "fontWeight": 400,
+                        "fontFamily": "Inter"
+                      },
+                      "fills": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0.20000000298023224,
+                            "g": 0.20000000298023224,
+                            "b": 0.22745098173618317,
+                            "a": 1
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "I35:267;81:2476;22:36",
+                  "name": "左メニューリスト",
+                  "type": "INSTANCE",
+                  "layoutMode": "HORIZONTAL",
+                  "counterAxisAlignItems": "CENTER",
+                  "paddingLeft": 16,
+                  "paddingRight": 16,
+                  "paddingTop": 8,
+                  "paddingBottom": 8,
+                  "itemSpacing": 10,
+                  "width": 184,
+                  "height": 37,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.886274516582489,
+                        "g": 0.8901960849761963,
+                        "b": 0.9058823585510254,
+                        "a": 1
+                      }
+                    }
+                  ],
+                  "children": [
+                    {
+                      "id": "I35:267;81:2476;22:36;21:4938",
+                      "name": "内容",
+                      "type": "TEXT",
+                      "width": 152,
+                      "height": 21,
+                      "characters": "メーリングリスト",
+                      "style": {
+                        "fontSize": 14,
+                        "fontWeight": 400,
+                        "fontFamily": "Inter"
+                      },
+                      "fills": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0.20000000298023224,
+                            "g": 0.20000000298023224,
+                            "b": 0.22745098173618317,
+                            "a": 1
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "I35:267;81:2476;21:4979",
+          "name": "Frame 4",
+          "type": "FRAME",
+          "layoutMode": "HORIZONTAL",
+          "paddingLeft": 8,
+          "paddingRight": 8,
+          "paddingTop": 16,
+          "paddingBottom": 16,
+          "itemSpacing": 4,
+          "width": 200,
+          "height": 68,
+          "fills": [],
+          "children": [
+            {
+              "id": "I35:267;81:2476;21:4973",
+              "name": "Icon",
+              "type": "INSTANCE",
+              "layoutMode": "HORIZONTAL",
+              "width": 16,
+              "height": 16,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 1,
+                    "g": 1,
+                    "b": 1,
+                    "a": 1
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "id": "I35:267;81:2476;21:4973;21:4961",
+                  "name": "info_FILL0_wght400_GRAD0_opsz24 1",
+                  "type": "INSTANCE",
+                  "width": 16,
+                  "height": 16,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 1,
+                        "g": 1,
+                        "b": 1,
+                        "a": 1
+                      }
+                    }
+                  ],
+                  "children": [
+                    {
+                      "id": "I35:267;81:2476;21:4973;21:4961;1372:53379",
+                      "name": "Vector",
+                      "type": "VECTOR",
+                      "width": 13.333333969116211,
+                      "height": 13.333333969116211,
+                      "fills": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0.4156862795352936,
+                            "g": 0.4313725531101227,
+                            "b": 0.47058823704719543,
+                            "a": 1
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "I35:267;81:2476;21:4978",
+              "name": "選択できる組織情報のみが表示されます",
+              "type": "TEXT",
+              "width": 164,
+              "height": 36,
+              "characters": "選択できる組織情報のみが表示されます",
+              "style": {
+                "fontSize": 12,
+                "fontWeight": 400,
+                "fontFamily": "Inter"
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0.4156862795352936,
+                    "g": 0.4313725531101227,
+                    "b": 0.47058823704719543,
+                    "a": 1
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I35:267;31:99",
+      "name": "Frame 4",
+      "type": "FRAME",
+      "layoutMode": "VERTICAL",
+      "width": 822,
+      "height": 669,
+      "fills": [],
+      "children": [
+        {
+          "id": "I35:267;31:98",
+          "name": "Frame 4",
+          "type": "FRAME",
+          "layoutMode": "HORIZONTAL",
+          "counterAxisAlignItems": "CENTER",
+          "width": 822,
+          "height": 605,
+          "fills": [],
+          "children": [
+            {
+              "id": "I35:267;34:189",
+              "name": "Frame 10",
+              "type": "FRAME",
+              "width": 539,
+              "height": 605,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 1,
+                    "g": 1,
+                    "b": 1,
+                    "a": 1
+                  }
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "I35:267;31:97",
+              "name": "Frame 4",
+              "type": "FRAME",
+              "layoutMode": "VERTICAL",
+              "counterAxisAlignItems": "CENTER",
+              "paddingLeft": 16,
+              "paddingRight": 16,
+              "paddingTop": 12,
+              "paddingBottom": 12,
+              "width": 283,
+              "height": 605,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 1,
+                    "g": 1,
+                    "b": 1,
+                    "a": 1
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "id": "I35:267;31:96",
+                  "name": "Frame 12",
+                  "type": "FRAME",
+                  "width": 251,
+                  "height": 21,
+                  "fills": [],
+                  "children": [
+                    {
+                      "id": "I35:267;31:92",
+                      "name": "選択中",
+                      "type": "TEXT",
+                      "width": 251,
+                      "height": 21,
+                      "characters": "選択中",
+                      "style": {
+                        "fontSize": 14,
+                        "fontWeight": 700,
+                        "fontFamily": "Inter"
+                      },
+                      "fills": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0,
+                            "g": 0,
+                            "b": 0,
+                            "a": 1
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "I35:267;31:95",
+                  "name": "Frame 11",
+                  "type": "FRAME",
+                  "width": 251,
+                  "height": 560,
+                  "fills": [],
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "I35:267;29:69",
+          "name": "Frame 4",
+          "type": "FRAME",
+          "layoutMode": "HORIZONTAL",
+          "primaryAxisAlignItems": "MAX",
+          "counterAxisAlignItems": "CENTER",
+          "paddingLeft": 16,
+          "paddingRight": 16,
+          "paddingTop": 12,
+          "paddingBottom": 12,
+          "itemSpacing": 16,
+          "width": 822,
+          "height": 64,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 1,
+                "g": 1,
+                "b": 1,
+                "a": 1
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "I35:267;29:67",
+              "name": "button",
+              "type": "INSTANCE",
+              "layoutMode": "HORIZONTAL",
+              "primaryAxisAlignItems": "CENTER",
+              "counterAxisAlignItems": "CENTER",
+              "paddingLeft": 16,
+              "paddingRight": 16,
+              "paddingTop": 8,
+              "paddingBottom": 8,
+              "itemSpacing": 10,
+              "width": 142,
+              "height": 40,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 1,
+                    "g": 1,
+                    "b": 1,
+                    "a": 1
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "id": "I35:267;29:67;24:55",
+                  "name": "キャンセル",
+                  "type": "TEXT",
+                  "width": 110,
+                  "height": 24,
+                  "characters": "キャンセル",
+                  "style": {
+                    "fontSize": 16,
+                    "fontWeight": 400,
+                    "fontFamily": "Inter"
+                  },
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.20000000298023224,
+                        "g": 0.20000000298023224,
+                        "b": 0.22745098173618317,
+                        "a": 1
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "I35:267;29:65",
+              "name": "button",
+              "type": "INSTANCE",
+              "layoutMode": "HORIZONTAL",
+              "primaryAxisAlignItems": "CENTER",
+              "counterAxisAlignItems": "CENTER",
+              "paddingLeft": 16,
+              "paddingRight": 16,
+              "paddingTop": 8,
+              "paddingBottom": 8,
+              "itemSpacing": 10,
+              "width": 142,
+              "height": 40,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0.8666666746139526,
+                    "g": 0.1764705926179886,
+                    "b": 0.29019609093666077,
+                    "a": 1
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "id": "I35:267;29:65;24:61",
+                  "name": "適用",
+                  "type": "TEXT",
+                  "width": 110,
+                  "height": 24,
+                  "characters": "適用",
+                  "style": {
+                    "fontSize": 16,
+                    "fontWeight": 400,
+                    "fontFamily": "Inter"
+                  },
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 1,
+                        "g": 1,
+                        "b": 1,
+                        "a": 1
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

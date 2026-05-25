@@ -1,0 +1,218 @@
+{
+  "id": "37:395",
+  "name": "宛先",
+  "type": "INSTANCE",
+  "componentId": "35:219",
+  "layoutMode": "HORIZONTAL",
+  "layoutGrow": 0,
+  "layoutAlign": "STRETCH",
+  "paddingLeft": 16,
+  "paddingRight": 16,
+  "paddingTop": 8,
+  "paddingBottom": 8,
+  "width": 507,
+  "height": 73,
+  "componentProperties": {
+    "部署#35:2": {
+      "type": "TEXT",
+      "value": "北東北保険金サービス部青森保険金サービス課"
+    },
+    "名前#35:1": {
+      "type": "TEXT",
+      "value": "DA部店1"
+    },
+    "アイコンを表示#391:0": {
+      "type": "BOOLEAN",
+      "value": true
+    },
+    "部署を表示#35:0": {
+      "type": "BOOLEAN",
+      "value": true
+    }
+  },
+  "fills": [],
+  "children": [
+    {
+      "id": "I37:395;35:217",
+      "name": "Frame 14",
+      "type": "FRAME",
+      "layoutMode": "HORIZONTAL",
+      "counterAxisAlignItems": "CENTER",
+      "layoutGrow": 0,
+      "layoutAlign": "INHERIT",
+      "paddingRight": 4,
+      "itemSpacing": 10,
+      "width": 28,
+      "height": 24,
+      "fills": [],
+      "children": [
+        {
+          "id": "I37:395;34:212",
+          "name": "Frame 13",
+          "type": "FRAME",
+          "layoutMode": "HORIZONTAL",
+          "primaryAxisAlignItems": "CENTER",
+          "counterAxisAlignItems": "CENTER",
+          "layoutGrow": 0,
+          "layoutAlign": "INHERIT",
+          "itemSpacing": 10,
+          "width": 24,
+          "height": 24,
+          "fills": [],
+          "children": [
+            {
+              "id": "I37:395;34:209",
+              "name": "Icon",
+              "type": "INSTANCE",
+              "componentId": "203:1609",
+              "layoutGrow": 0,
+              "layoutAlign": "INHERIT",
+              "width": 16,
+              "height": 16,
+              "componentProperties": {
+                "プロパティ1": {
+                  "value": "user",
+                  "type": "VARIANT",
+                  "boundVariables": {}
+                }
+              },
+              "fills": [],
+              "children": [
+                {
+                  "id": "I37:395;34:209;203:1610",
+                  "name": "Vector",
+                  "type": "VECTOR",
+                  "width": 10.666666984558105,
+                  "height": 10.666666984558105,
+                  "styles": {
+                    "fill": "21:4906"
+                  },
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.20000000298023224,
+                        "g": 0.20000000298023224,
+                        "b": 0.22745098173618317,
+                        "a": 1
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I37:395;34:216",
+      "name": "Frame 4",
+      "type": "FRAME",
+      "layoutMode": "VERTICAL",
+      "layoutGrow": 0,
+      "layoutAlign": "INHERIT",
+      "width": 252,
+      "height": 57,
+      "fills": [],
+      "children": [
+        {
+          "id": "I37:395;34:213",
+          "name": "名前太郎",
+          "type": "TEXT",
+          "layoutGrow": 0,
+          "layoutAlign": "STRETCH",
+          "width": 252,
+          "height": 21,
+          "styles": {
+            "fill": "21:4906",
+            "text": "21:4930"
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.20000000298023224,
+                "g": 0.20000000298023224,
+                "b": 0.22745098173618317,
+                "a": 1
+              }
+            }
+          ],
+          "characters": "DA部店1",
+          "style": {
+            "fontSize": 14,
+            "fontWeight": 400,
+            "fontFamily": "Inter",
+            "lineHeightPx": 21,
+            "textAlignHorizontal": "LEFT"
+          }
+        },
+        {
+          "id": "I37:395;34:214",
+          "name": "北東北保険金サービス部青森保険金サービス課",
+          "type": "TEXT",
+          "layoutGrow": 0,
+          "layoutAlign": "STRETCH",
+          "width": 252,
+          "height": 18,
+          "styles": {
+            "fill": "21:4972",
+            "text": "21:4977"
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.4156862795352936,
+                "g": 0.4313725531101227,
+                "b": 0.47058823704719543,
+                "a": 1
+              }
+            }
+          ],
+          "characters": "北東北保険金サービス部青森保険金サービス課",
+          "style": {
+            "fontSize": 12,
+            "fontWeight": 400,
+            "fontFamily": "Inter",
+            "lineHeightPx": 18,
+            "textAlignHorizontal": "LEFT"
+          }
+        },
+        {
+          "id": "I37:395;34:215",
+          "name": "namaetarou@example.com",
+          "type": "TEXT",
+          "layoutGrow": 0,
+          "layoutAlign": "STRETCH",
+          "width": 252,
+          "height": 18,
+          "styles": {
+            "fill": "21:4972",
+            "text": "21:4977"
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.4156862795352936,
+                "g": 0.4313725531101227,
+                "b": 0.47058823704719543,
+                "a": 1
+              }
+            }
+          ],
+          "characters": "namaetarou@example.com",
+          "style": {
+            "fontSize": 12,
+            "fontWeight": 400,
+            "fontFamily": "Inter",
+            "lineHeightPx": 18,
+            "textAlignHorizontal": "LEFT"
+          }
+        }
+      ]
+    }
+  ]
+}

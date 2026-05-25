@@ -1,9 +1,15 @@
-import { useState, useMemo } from 'react';
-import { Container, Typography, Box, Fab, Tooltip } from '@mui/material';
-import { Add as AddIcon } from '@mui/icons-material';
-import { UserTable, UserFilters, UserStats, type User } from '../components';
-import { spacing } from '@design-system/tokens';
-import { useTheme } from '@mui/material/styles';
+import { useState, useMemo } from "react";
+import { Container, Typography, Box, Fab, Tooltip } from "@mui/material";
+import { Add as AddIcon } from "@mui/icons-material";
+import {
+  UserTable,
+  UserFilters,
+  UserStats,
+  UserEditModal,
+  type User,
+} from "../components";
+import { spacing } from "@design-system/tokens";
+import { useTheme } from "@mui/material/styles";
 
 /**
  * 用户管理页面
@@ -11,56 +17,57 @@ import { useTheme } from '@mui/material/styles';
  */
 export function UsersPage() {
   const theme = useTheme();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [roleFilter, setRoleFilter] = useState('');
-  const [statusFilter, setStatusFilter] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [roleFilter, setRoleFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [editingUser, setEditingUser] = useState<User | null>(null);
 
   // 模拟用户数据
   const mockUsers: User[] = [
     {
-      id: '1',
-      name: '张三',
-      email: 'zhangsan@example.com',
-      role: 'admin',
-      status: 'active',
-      lastLogin: '2小时前',
-      createdAt: '2024-01-15',
+      id: "1",
+      name: "张三",
+      email: "zhangsan@example.com",
+      role: "admin",
+      status: "active",
+      lastLogin: "2小时前",
+      createdAt: "2024-01-15",
     },
     {
-      id: '2',
-      name: '李四',
-      email: 'lisi@example.com',
-      role: 'moderator',
-      status: 'active',
-      lastLogin: '5小时前',
-      createdAt: '2024-01-20',
+      id: "2",
+      name: "李四",
+      email: "lisi@example.com",
+      role: "moderator",
+      status: "active",
+      lastLogin: "5小时前",
+      createdAt: "2024-01-20",
     },
     {
-      id: '3',
-      name: '王五',
-      email: 'wangwu@example.com',
-      role: 'user',
-      status: 'inactive',
-      lastLogin: '3天前',
-      createdAt: '2024-02-01',
+      id: "3",
+      name: "王五",
+      email: "wangwu@example.com",
+      role: "user",
+      status: "inactive",
+      lastLogin: "3天前",
+      createdAt: "2024-02-01",
     },
     {
-      id: '4',
-      name: '赵六',
-      email: 'zhaoliu@example.com',
-      role: 'user',
-      status: 'pending',
-      lastLogin: '从未',
-      createdAt: '2024-02-10',
+      id: "4",
+      name: "赵六",
+      email: "zhaoliu@example.com",
+      role: "user",
+      status: "pending",
+      lastLogin: "从未",
+      createdAt: "2024-02-10",
     },
     {
-      id: '5',
-      name: '钱七',
-      email: 'qianqi@example.com',
-      role: 'user',
-      status: 'active',
-      lastLogin: '1小时前',
-      createdAt: '2024-02-12',
+      id: "5",
+      name: "钱七",
+      email: "qianqi@example.com",
+      role: "user",
+      status: "active",
+      lastLogin: "1小时前",
+      createdAt: "2024-02-12",
     },
   ];
 
@@ -79,15 +86,15 @@ export function UsersPage() {
 
   const stats = {
     total: mockUsers.length,
-    active: mockUsers.filter((u) => u.status === 'active').length,
-    inactive: mockUsers.filter((u) => u.status === 'inactive').length,
+    active: mockUsers.filter((u) => u.status === "active").length,
+    inactive: mockUsers.filter((u) => u.status === "inactive").length,
     newToday: 2,
   };
 
   const handleClearFilters = () => {
-    setSearchQuery('');
-    setRoleFilter('');
-    setStatusFilter('');
+    setSearchQuery("");
+    setRoleFilter("");
+    setStatusFilter("");
   };
 
   return (
@@ -106,9 +113,9 @@ export function UsersPage() {
           sx={{
             fontWeight: theme.typography.fontWeightBold,
             background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary?.main || theme.palette.primary.dark} 100%)`,
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
+            backgroundClip: "text",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
             mb: spacing.sm,
           }}
         >
@@ -136,13 +143,22 @@ export function UsersPage() {
       {/* 用户表格 */}
       <Box
         sx={{
-          position: 'relative',
+          position: "relative",
         }}
       >
         <UserTable
           users={filteredUsers}
-          onEdit={(user) => console.log('Edit:', user)}
-          onDelete={(user) => console.log('Delete:', user)}
+          onEdit={(user) => setEditingUser(user)}
+          onDelete={(user) => console.log("Delete:", user)}
+        />
+        <UserEditModal
+          open={editingUser !== null}
+          user={editingUser}
+          onClose={() => setEditingUser(null)}
+          onSave={(updated) => {
+            console.log("Saved:", updated);
+            setEditingUser(null);
+          }}
         />
       </Box>
 
@@ -152,15 +168,15 @@ export function UsersPage() {
           color="primary"
           aria-label="add"
           sx={{
-            position: 'fixed',
+            position: "fixed",
             bottom: spacing.xl,
             right: spacing.xl,
             boxShadow: theme.shadows[12],
-            '&:hover': {
-              transform: 'scale(1.1)',
+            "&:hover": {
+              transform: "scale(1.1)",
               boxShadow: theme.shadows[16],
             },
-            transition: theme.transitions.create(['transform', 'box-shadow'], {
+            transition: theme.transitions.create(["transform", "box-shadow"], {
               duration: theme.transitions.duration.short,
             }),
           }}
@@ -171,4 +187,3 @@ export function UsersPage() {
     </Container>
   );
 }
-
