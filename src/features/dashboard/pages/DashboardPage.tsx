@@ -1,6 +1,11 @@
-import { Container, Typography, Box } from '@mui/material';
-import { DashboardStats, defaultStats } from '../components';
-import { spacing } from '@design-system/tokens';
+import { Container, Typography, Box } from "@mui/material";
+import {
+  DashboardStats,
+  defaultStats,
+  ThreadList,
+  defaultThreadItems,
+} from "../components";
+import { spacing } from "@design-system/tokens";
 
 /**
  * 仪表板页面
@@ -11,7 +16,7 @@ import { spacing } from '@design-system/tokens';
 export function DashboardPage() {
   // 在实际应用中，这里应该从数据层获取统计数据
   // const { data, isLoading, error } = useDashboardStats();
-  
+
   // 示例：使用默认数据
   const stats = defaultStats;
 
@@ -27,7 +32,14 @@ export function DashboardPage() {
       </Box>
 
       <DashboardStats stats={stats} />
+
+      {/* Figma: ul (1805:217021) — ThreadList スレッドリスト */}
+      <Box sx={{ mt: spacing.lg }}>
+        <Typography variant="h6" fontWeight="medium" sx={{ mb: spacing.sm }}>
+          メッセージ一覧
+        </Typography>
+        <ThreadList items={defaultThreadItems} />
+      </Box>
     </Container>
   );
 }
-

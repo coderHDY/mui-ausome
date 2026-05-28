@@ -125,13 +125,112 @@ node <SKILL_DIR>/scripts/fetch-figma.js "<从消息中提取的完整URL>"
 - 仅对 Figma 中**明确锁定**的尺寸（如按钮 `width:142 height:40`、弹窗 `width:1022 height:669`）使用固定值。
 - 弹性区域（`layoutGrow:1` 或占满剩余空间）不设固定宽/高，改用 `flex:1` / `flexGrow:1`。
 
-#### 4.6 文件放置规范
+#### 4.6 多端响应式策略（PC + 手机 / iPad 版本）
+
+当用户同时提供同一组件的多个屏幕尺寸版本（PC、手机、iPad）时，**优先做响应式布局而不是完整复刻每个 Figma 帧的静态配置**。
+
+**决策树：**
+
+```
+提供了多端设计稿？
+  └─ 是 → 差异主要是间距/字号/排列方向？
+              └─ 是 → ✅ 用 flex + MUI breakpoint 做单套响应式组件
+              └─ 否（结构差异太大，无法共用一套 DOM）→ ✅ 写两套展示子组件，
+                                                          用 display breakpoint 控制显示/隐藏，
+                                                          状态统一提升到父组件
+```
+
+**方案 A — Flex + Breakpoint 响应式（首选）**
+
+适用：布局方向、间距、字号、某些元素的显隐可以通过响应式 sx 值覆盖。
+
+```tsx
+// 方向切换示例
+<Stack
+  direction={{ xs: "column", md: "row" }}
+  gap={{ xs: spacing.sm, md: spacing.md }}
+>
+  {/* 仅在移动端显示的元素 */}
+  <Box sx={{ display: { xs: "flex", md: "none" } }}>...</Box>
+  {/* 仅在桌面端显示的元素 */}
+  <Box sx={{ display: { xs: "none", md: "flex" } }}>...</Box>
+</Stack>
+```
+
+**方案 B — 双布局子组件（复杂结构时）**
+
+适用：两端的 DOM 结构差异过大，强行合并会导致代码难以维护。
+
+规则：
+
+1. 提取私有子组件（不导出），命名如 `DesktopView` / `MobileView`。
+2. 所有**状态、事件回调**统一定义在父组件，通过 props 向下传递，**禁止在子组件内各自维护独立状态**。
+3. 使用 `display: { xs: 'none', md: 'block' }` / `display: { xs: 'block', md: 'none' }` 控制显示。
+
+```tsx
+// 状态统一在父组件
+const [checked, setChecked] = useState(false);
+
+return (
+  <>
+    {/* 桌面版 */}
+    <DesktopView
+      sx={{ display: { xs: "none", md: "flex" } }}
+      checked={checked}
+      onCheck={setChecked}
+    />
+    {/* 移动版 */}
+    <MobileView
+      sx={{ display: { xs: "flex", md: "none" } }}
+      checked={checked}
+      onCheck={setChecked}
+    />
+  </>
+);
+```
+
+**MUI 断点参考（项目默认）：**
+
+| 断点 | 宽度    | 对应场景           |
+| ---- | ------- | ------------------ |
+| xs   | 0px+    | 手机（纵向）       |
+| sm   | 600px+  | 手机（横向）/ iPad |
+| md   | 900px+  | iPad 宽屏 / 桌面   |
+| lg   | 1200px+ | 大屏桌面           |
+
+> **布局样式差异优先用 `sx` 响应式对象**（不触发重渲染，CSS 原生处理）；**需要条件渲染不同组件时用 `useMediaQuery`**（见下方说明）。
+
+**`useMediaQuery` 适用场景（条件渲染，DOM 中只保留一个）：**
+
+```tsx
+const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+// ✅ 两个组件行为/生命周期完全不同，不应同时存在于 DOM
+return isMobile ? <MobileDrawer /> : <DesktopSidebar />;
+```
+
+**`sx` 响应式对象适用场景（两者都在 DOM，CSS 控制显隐）：**
+
+```tsx
+// ✅ 结构相近，只是样式/排列不同；或隐藏的部分足够轻量
+<Box sx={{ display: { xs: "none", md: "flex" } }}>...</Box>
+```
+
+**选择依据：**
+
+| 情况                                            | 方案                                |
+| ----------------------------------------------- | ----------------------------------- |
+| 两端只是样式/间距/方向不同                      | `sx` 响应式                         |
+| 两端 DOM 结构差异大，但逻辑相近                 | 方案 B（双子组件 + `display` 隐藏） |
+| 两端是完全不同的组件（如 Drawer vs 固定侧边栏） | `useMediaQuery` 条件渲染            |
+| 断点值需要影响非 UI 逻辑（请求参数等）          | `useMediaQuery`                     |
+
+#### 4.7 文件放置规范
 
 - 组件文件放到对应 feature 目录的 `components/` 下（如 `src/features/users/components/`）。
 - 若是通用 UI 组件，放到 `src/shared/components/`。
 - 写完后在同目录的 `index.ts` 追加导出。
 
-#### 4.7 代码质量要求
+#### 4.8 代码质量要求
 
 - 完整 TypeScript 类型，包含 Props interface 和导出。
 - 使用 `useTheme()` 获取主题，不 import 原始色值。
