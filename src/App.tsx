@@ -8,6 +8,7 @@ import { NavigationMenu } from '@features/navigation';
 import { DataPage } from '@features/data';
 import { ProfilePage } from '@features/profile';
 import { CopilotAwesomePage } from '@features/copilot';
+import { SlidesPage } from '@features/slides';
 import { AppLayout } from '@shared/layout';
 import { LoginPage, RegisterPage } from '@features/auth/pages';
 import { ProtectedRoute } from '@shared/components/ProtectedRoute';
@@ -56,6 +57,7 @@ function App() {
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/copilot-awesome" element={<CopilotAwesomePage />} />
+            <Route path="/slides" element={<SlidesPage />} />
           </Route>
 
           {/* Redirect unknown paths to 404 */}

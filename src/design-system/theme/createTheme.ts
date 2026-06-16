@@ -110,8 +110,9 @@ export function createTheme(mode: ThemeMode = 'light'): Theme {
       themeConfig.shadows.md,
       themeConfig.shadows.lg,
       themeConfig.shadows.xl,
-      ...Array(19).fill(themeConfig.shadows.xl),
-    ] as any,
+      // MUI Modal/Dialog 默认 elevation=24，shadows 须覆盖索引 0–24（共 25 项）
+      ...Array(20).fill(themeConfig.shadows.xl),
+    ] as Theme['shadows'],
     spacing: (factor: number) => `${factor * 4}px`,
   });
 }

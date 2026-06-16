@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip, Divider } from '@mui/material';
-import { Dashboard, Settings, People, Storage, AccountCircle, SmartToy } from '@mui/icons-material';
+import { Dashboard, Settings, People, Storage, AccountCircle, SmartToy, Slideshow } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useUIStore } from '@shared/state';
 import { useMediaQuery, useTheme } from '@mui/material';
@@ -42,6 +42,11 @@ const navItems: NavItem[] = [
     label: 'Awesome Copilot',
     path: '/copilot-awesome',
     icon: <SmartToy />,
+  },
+  {
+    label: 'Slide 演示',
+    path: '/slides',
+    icon: <Slideshow />,
   },
 ];
 
