@@ -42,8 +42,7 @@ export function SlideViewport({
         minScale={zoom.minScale}
         maxScale={zoom.maxScale}
         centerOnInit
-        centerZoomedOut
-        limitToBounds
+        limitToBounds={false}
         smooth
         wheel={{
           step: zoom.wheelStep,
