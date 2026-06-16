@@ -23,3 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 
+# Cursor / Claude 本地配置（不入库，clone 后按 docs/agent-harness.md 重建）
+.cursor
+.claude
+.codegraph
+todo.md
+
