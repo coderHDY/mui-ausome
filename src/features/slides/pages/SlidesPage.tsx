@@ -9,9 +9,11 @@ import { SlideControls } from '../components/SlideControls';
 import { ElementPreviewModal } from '../components/ElementPreviewModal';
 import { resolvePreviewPayload } from '../types/slide.types';
 import { useSlideEditorStore } from '../model/store/slide-editor-store';
+import { useSlideEditorHistory } from '../hooks/useSlideEditorHistory';
 
 export function SlidesPage() {
   usePreventBrowserZoom(true);
+  useSlideEditorHistory(true);
   const clearSelection = useSlideEditorStore((s) => s.clearSelection);
   const closeToolbar = useSlideEditorStore((s) => s.closeToolbar);
 
@@ -66,7 +68,7 @@ export function SlidesPage() {
           Slide 演示
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          滚轮缩放画布；右侧画笔打开编辑工具（Excalidraw 风格）
+          滚轮缩放画布；右侧画笔编辑；⌘Z / ⌘⇧Z 撤销重做
         </Typography>
       </Box>
 

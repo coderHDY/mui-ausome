@@ -5,6 +5,11 @@ import {
   DEFAULT_STAMP_SIZE,
   toolNeedsSubOptionConfirm,
 } from '../../constants/tools';
+import {
+  cloneAnnotationsSnapshot,
+  pushSnapshot,
+  type AnnotationsSnapshot,
+} from '../history/command-stack';
 import type {
   AnnotationElement,
   EditorTool,
@@ -16,27 +21,31 @@ function createAnnotationId(): string {
 }
 
 type SlideEditorState = {
-  /** 工具弹窗是否展开 */
   toolbarOpen: boolean;
-  /** 画布是否处于编辑模式（已选工具且非纯浏览） */
   editorOpen: boolean;
   activeTool: EditorTool;
   strokeColor: string;
   strokeWidth: number;
   stampKind: StampKind;
   selectedAnnotationId: string | null;
-  annotationsBySlideId: Record<string, AnnotationElement[]>;
+  annotationsBySlideId: AnnotationsSnapshot;
+  historyPast: AnnotationsSnapshot[];
+  historyFuture: AnnotationsSnapshot[];
 
   toggleToolbar: () => void;
   closeToolbar: () => void;
   selectTool: (tool: EditorTool) => void;
-  /** 完成二次选项（线宽 / 图章类型）后关闭弹窗并进入编辑 */
   confirmTool: () => void;
   setStrokeColor: (color: string) => void;
   setStrokeWidth: (width: number) => void;
   setStampKind: (kind: StampKind) => void;
   setSelectedAnnotationId: (id: string | null) => void;
   clearSelection: () => void;
+
+  canUndo: () => boolean;
+  canRedo: () => boolean;
+  undo: () => void;
+  redo: () => void;
 
   getAnnotations: (slideId: string) => AnnotationElement[];
   addAnnotation: (slideId: string, element: AnnotationElement) => void;
@@ -59,162 +68,235 @@ type SlideEditorState = {
   applyColorToSelected: (slideId: string, color: string) => void;
 };
 
-export const useSlideEditorStore = create<SlideEditorState>((set, get) => ({
-  toolbarOpen: false,
-  editorOpen: false,
-  activeTool: 'select',
-  strokeColor: DEFAULT_STROKE_COLOR,
-  strokeWidth: DEFAULT_STROKE_WIDTH,
-  stampKind: 'check',
-  selectedAnnotationId: null,
-  annotationsBySlideId: {},
-
-  toggleToolbar: () =>
-    set((state) => ({ toolbarOpen: !state.toolbarOpen })),
-
-  closeToolbar: () => set({ toolbarOpen: false }),
-
-  selectTool: (tool) => {
-    if (tool === 'pan') {
-      set({
-        activeTool: 'pan',
-        toolbarOpen: false,
-        editorOpen: false,
-        selectedAnnotationId: null,
-      });
-      return;
+function syncSelectionAfterRestore(
+  selectedId: string | null,
+  snapshot: AnnotationsSnapshot,
+): string | null {
+  if (!selectedId) return null;
+  for (const elements of Object.values(snapshot)) {
+    if (elements.some((el) => el.id === selectedId)) {
+      return selectedId;
     }
-    if (toolNeedsSubOptionConfirm(tool)) {
+  }
+  return null;
+}
+
+export const useSlideEditorStore = create<SlideEditorState>((set, get) => {
+  const recordHistory = () => {
+    const snapshot = cloneAnnotationsSnapshot(get().annotationsBySlideId);
+    set((state) => ({
+      historyPast: pushSnapshot(state.historyPast, snapshot),
+      historyFuture: [],
+    }));
+  };
+
+  return {
+    toolbarOpen: false,
+    editorOpen: false,
+    activeTool: 'select',
+    strokeColor: DEFAULT_STROKE_COLOR,
+    strokeWidth: DEFAULT_STROKE_WIDTH,
+    stampKind: 'check',
+    selectedAnnotationId: null,
+    annotationsBySlideId: {},
+    historyPast: [],
+    historyFuture: [],
+
+    toggleToolbar: () =>
+      set((state) => ({ toolbarOpen: !state.toolbarOpen })),
+
+    closeToolbar: () => set({ toolbarOpen: false }),
+
+    selectTool: (tool) => {
+      if (tool === 'pan') {
+        set({
+          activeTool: 'pan',
+          toolbarOpen: false,
+          editorOpen: false,
+          selectedAnnotationId: null,
+        });
+        return;
+      }
+      if (toolNeedsSubOptionConfirm(tool)) {
+        set({
+          activeTool: tool,
+          toolbarOpen: true,
+          editorOpen: false,
+        });
+        return;
+      }
       set({
         activeTool: tool,
-        toolbarOpen: true,
-        editorOpen: false,
+        toolbarOpen: false,
+        editorOpen: true,
       });
-      return;
-    }
-    set({
-      activeTool: tool,
-      toolbarOpen: false,
-      editorOpen: true,
-    });
-  },
+    },
 
-  confirmTool: () =>
-    set({
-      toolbarOpen: false,
-      editorOpen: true,
-    }),
+    confirmTool: () =>
+      set({
+        toolbarOpen: false,
+        editorOpen: true,
+      }),
 
-  setStrokeColor: (color) => set({ strokeColor: color }),
+    setStrokeColor: (color) => set({ strokeColor: color }),
 
-  setStrokeWidth: (width) => set({ strokeWidth: width }),
+    setStrokeWidth: (width) => set({ strokeWidth: width }),
 
-  setStampKind: (kind) => set({ stampKind: kind }),
+    setStampKind: (kind) => set({ stampKind: kind }),
 
-  setSelectedAnnotationId: (id) => set({ selectedAnnotationId: id }),
+    setSelectedAnnotationId: (id) => set({ selectedAnnotationId: id }),
 
-  clearSelection: () => set({ selectedAnnotationId: null }),
+    clearSelection: () => set({ selectedAnnotationId: null }),
 
-  getAnnotations: (slideId) => get().annotationsBySlideId[slideId] ?? [],
+    canUndo: () => get().historyPast.length > 0,
 
-  addAnnotation: (slideId, element) =>
-    set((state) => ({
-      annotationsBySlideId: {
-        ...state.annotationsBySlideId,
-        [slideId]: [...(state.annotationsBySlideId[slideId] ?? []), element],
-      },
-    })),
+    canRedo: () => get().historyFuture.length > 0,
 
-  updateAnnotation: (slideId, id, patch) =>
-    set((state) => ({
-      annotationsBySlideId: {
-        ...state.annotationsBySlideId,
-        [slideId]: (state.annotationsBySlideId[slideId] ?? []).map((el) =>
-          el.id === id ? ({ ...el, ...patch } as AnnotationElement) : el,
+    undo: () => {
+      const { historyPast, annotationsBySlideId, selectedAnnotationId } = get();
+      if (historyPast.length === 0) return;
+
+      const previous = historyPast[historyPast.length - 1];
+      const current = cloneAnnotationsSnapshot(annotationsBySlideId);
+
+      set((state) => ({
+        annotationsBySlideId: cloneAnnotationsSnapshot(previous),
+        historyPast: state.historyPast.slice(0, -1),
+        historyFuture: [current, ...state.historyFuture],
+        selectedAnnotationId: syncSelectionAfterRestore(
+          selectedAnnotationId,
+          previous,
         ),
-      },
-    })),
+      }));
+    },
 
-  removeAnnotation: (slideId, id) =>
-    set((state) => ({
-      selectedAnnotationId:
-        state.selectedAnnotationId === id ? null : state.selectedAnnotationId,
-      annotationsBySlideId: {
-        ...state.annotationsBySlideId,
-        [slideId]: (state.annotationsBySlideId[slideId] ?? []).filter(
-          (el) => el.id !== id,
+    redo: () => {
+      const { historyFuture, annotationsBySlideId, selectedAnnotationId } =
+        get();
+      if (historyFuture.length === 0) return;
+
+      const next = historyFuture[0];
+      const current = cloneAnnotationsSnapshot(annotationsBySlideId);
+
+      set((state) => ({
+        annotationsBySlideId: cloneAnnotationsSnapshot(next),
+        historyPast: pushSnapshot(state.historyPast, current),
+        historyFuture: state.historyFuture.slice(1),
+        selectedAnnotationId: syncSelectionAfterRestore(
+          selectedAnnotationId,
+          next,
         ),
-      },
-    })),
+      }));
+    },
 
-  appendFreehandPoint: (slideId, id, x, y) =>
-    set((state) => ({
-      annotationsBySlideId: {
-        ...state.annotationsBySlideId,
-        [slideId]: (state.annotationsBySlideId[slideId] ?? []).map((el) =>
-          el.id === id && el.type === 'freehand'
-            ? { ...el, points: [...el.points, x, y] }
-            : el,
-        ),
-      },
-    })),
+    getAnnotations: (slideId) => get().annotationsBySlideId[slideId] ?? [],
 
-  createFreehand: (slideId, x, y) => {
-    const id = createAnnotationId();
-    const { strokeColor, strokeWidth } = get();
-    get().addAnnotation(slideId, {
-      type: 'freehand',
-      id,
-      points: [x, y],
-      stroke: strokeColor,
-      strokeWidth,
-    });
-    return id;
-  },
+    addAnnotation: (slideId, element) => {
+      recordHistory();
+      set((state) => ({
+        annotationsBySlideId: {
+          ...state.annotationsBySlideId,
+          [slideId]: [...(state.annotationsBySlideId[slideId] ?? []), element],
+        },
+      }));
+    },
 
-  createText: (slideId, x, y, content) => {
-    const id = createAnnotationId();
-    get().addAnnotation(slideId, {
-      type: 'text',
-      id,
-      x,
-      y,
-      content,
-      fontSize: 28,
-      fill: get().strokeColor,
-    });
-    get().setSelectedAnnotationId(id);
-  },
+    updateAnnotation: (slideId, id, patch) => {
+      recordHistory();
+      set((state) => ({
+        annotationsBySlideId: {
+          ...state.annotationsBySlideId,
+          [slideId]: (state.annotationsBySlideId[slideId] ?? []).map((el) =>
+            el.id === id ? ({ ...el, ...patch } as AnnotationElement) : el,
+          ),
+        },
+      }));
+    },
 
-  createStamp: (slideId, x, y) => {
-    const id = createAnnotationId();
-    const { strokeColor, stampKind } = get();
-    get().addAnnotation(slideId, {
-      type: 'stamp',
-      id,
-      x,
-      y,
-      stamp: stampKind,
-      size: DEFAULT_STAMP_SIZE,
-      fill: strokeColor,
-    });
-    get().setSelectedAnnotationId(id);
-  },
+    removeAnnotation: (slideId, id) => {
+      recordHistory();
+      set((state) => ({
+        selectedAnnotationId:
+          state.selectedAnnotationId === id ? null : state.selectedAnnotationId,
+        annotationsBySlideId: {
+          ...state.annotationsBySlideId,
+          [slideId]: (state.annotationsBySlideId[slideId] ?? []).filter(
+            (el) => el.id !== id,
+          ),
+        },
+      }));
+    },
 
-  applyColorToSelected: (slideId, color) => {
-    const { selectedAnnotationId } = get();
-    if (!selectedAnnotationId) return;
+    /** 画笔绘制中逐点追加，不单独入栈；整笔在 addAnnotation 时记一次历史 */
+    appendFreehandPoint: (slideId, id, x, y) =>
+      set((state) => ({
+        annotationsBySlideId: {
+          ...state.annotationsBySlideId,
+          [slideId]: (state.annotationsBySlideId[slideId] ?? []).map((el) =>
+            el.id === id && el.type === 'freehand'
+              ? { ...el, points: [...el.points, x, y] }
+              : el,
+          ),
+        },
+      })),
 
-    const target = get()
-      .getAnnotations(slideId)
-      .find((el) => el.id === selectedAnnotationId);
-    if (!target) return;
+    createFreehand: (slideId, x, y) => {
+      const id = createAnnotationId();
+      const { strokeColor, strokeWidth } = get();
+      get().addAnnotation(slideId, {
+        type: 'freehand',
+        id,
+        points: [x, y],
+        stroke: strokeColor,
+        strokeWidth,
+      });
+      return id;
+    },
 
-    if (target.type === 'freehand') {
-      get().updateAnnotation(slideId, selectedAnnotationId, { stroke: color });
-    } else {
-      get().updateAnnotation(slideId, selectedAnnotationId, { fill: color });
-    }
-    set({ strokeColor: color });
-  },
-}));
+    createText: (slideId, x, y, content) => {
+      const id = createAnnotationId();
+      get().addAnnotation(slideId, {
+        type: 'text',
+        id,
+        x,
+        y,
+        content,
+        fontSize: 28,
+        fill: get().strokeColor,
+      });
+      get().setSelectedAnnotationId(id);
+    },
+
+    createStamp: (slideId, x, y) => {
+      const id = createAnnotationId();
+      const { strokeColor, stampKind } = get();
+      get().addAnnotation(slideId, {
+        type: 'stamp',
+        id,
+        x,
+        y,
+        stamp: stampKind,
+        size: DEFAULT_STAMP_SIZE,
+        fill: strokeColor,
+      });
+      get().setSelectedAnnotationId(id);
+    },
+
+    applyColorToSelected: (slideId, color) => {
+      const { selectedAnnotationId } = get();
+      if (!selectedAnnotationId) return;
+
+      const target = get()
+        .getAnnotations(slideId)
+        .find((el) => el.id === selectedAnnotationId);
+      if (!target) return;
+
+      if (target.type === 'freehand') {
+        get().updateAnnotation(slideId, selectedAnnotationId, { stroke: color });
+      } else {
+        get().updateAnnotation(slideId, selectedAnnotationId, { fill: color });
+      }
+      set({ strokeColor: color });
+    },
+  };
+});

@@ -10,6 +10,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { spacing } from '@design-system/tokens';
 
 import { SlideEditorToolbar } from './SlideEditorToolbar';
+import { SlideHistoryButtons } from './SlideHistoryButtons';
 
 interface SlideControlsProps {
   slideId: string;
@@ -76,6 +77,8 @@ export function SlideControls({
       </Tooltip>
 
       <SlideEditorToolbar slideId={slideId} />
+
+      <SlideHistoryButtons />
 
       <Typography
         variant="caption"
