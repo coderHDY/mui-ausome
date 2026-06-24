@@ -22,6 +22,7 @@ type UseKonvaCameraOptions = {
   contentSize: ContentSize;
   resetKey?: string;
   disabled?: boolean;
+  panEnabled?: boolean;
   containerRef: React.RefObject<HTMLDivElement | null>;
 };
 
@@ -40,6 +41,7 @@ export function useKonvaCamera({
   contentSize,
   resetKey,
   disabled = false,
+  panEnabled = true,
   containerRef,
 }: UseKonvaCameraOptions) {
   const [camera, setCamera] = useState<CameraState>(() =>
@@ -139,18 +141,18 @@ export function useKonvaCamera({
 
   const handlePointerDown = useCallback(
     (e: Konva.KonvaEventObject<PointerEvent>) => {
-      if (disabled) return;
+      if (disabled || !panEnabled) return;
       if (e.evt.button !== 0) return;
 
       isPanningRef.current = true;
       beginPointerSession(e.evt.clientX, e.evt.clientY);
     },
-    [beginPointerSession, disabled],
+    [beginPointerSession, disabled, panEnabled],
   );
 
   const handlePointerMove = useCallback(
     (e: Konva.KonvaEventObject<PointerEvent>) => {
-      if (disabled || !isPanningRef.current) return;
+      if (disabled || !panEnabled || !isPanningRef.current) return;
 
       markDragIfNeeded(e.evt.clientX, e.evt.clientY);
 
@@ -165,7 +167,7 @@ export function useKonvaCamera({
         y: current.y + dy,
       });
     },
-    [applyCamera, disabled, markDragIfNeeded],
+    [applyCamera, disabled, markDragIfNeeded, panEnabled],
   );
 
   const stopPanning = useCallback(() => {
@@ -184,6 +186,7 @@ export function useKonvaCamera({
         };
         isPanningRef.current = false;
       } else if (e.evt.touches.length === 1) {
+        if (!panEnabled) return;
         isPanningRef.current = true;
         beginPointerSession(
           e.evt.touches[0].clientX,
@@ -191,7 +194,7 @@ export function useKonvaCamera({
         );
       }
     },
-    [beginPointerSession, disabled],
+    [beginPointerSession, disabled, panEnabled],
   );
 
   const handleTouchMove = useCallback(

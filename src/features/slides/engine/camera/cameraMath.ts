@@ -220,3 +220,14 @@ export function clientToStagePoint(
     y: clientY - containerRect.top,
   };
 }
+
+/** Stage 屏幕坐标 → slide 世界坐标 */
+export function screenToWorld(
+  screen: { x: number; y: number },
+  camera: CameraState,
+): { x: number; y: number } {
+  return {
+    x: (screen.x - camera.x) / camera.scale,
+    y: (screen.y - camera.y) / camera.scale,
+  };
+}

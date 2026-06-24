@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { Stage, Layer } from 'react-konva';
 import type { CameraConfig } from '../../constants/viewport';
 import { CameraInteractionContext } from '../camera/cameraInteractionContext';
+import { CameraStateContext } from '../camera/cameraStateContext';
 import { useKonvaCamera } from '../camera/useKonvaCamera';
 import type { ContentSize } from '../camera/cameraMath';
 
@@ -11,6 +12,7 @@ interface KonvaCameraStageProps {
   contentSize: ContentSize;
   resetKey?: string;
   disabled?: boolean;
+  panEnabled?: boolean;
   children: ReactNode;
   /** 外层 Box sx */
   sx?: object;
@@ -21,6 +23,7 @@ export function KonvaCameraStage({
   contentSize,
   resetKey,
   disabled = false,
+  panEnabled = true,
   children,
   sx,
 }: KonvaCameraStageProps) {
@@ -40,17 +43,22 @@ export function KonvaCameraStage({
     return () => observer.disconnect();
   }, []);
 
-  const { stageProps, shouldSuppressClick } = useKonvaCamera({
+  const { stageProps, shouldSuppressClick, camera } = useKonvaCamera({
     config,
     stageSize,
     contentSize,
     resetKey,
     disabled,
+    panEnabled,
     containerRef,
   });
 
+  const cursor =
+    disabled ? 'not-allowed' : panEnabled ? 'grab' : 'default';
+
   return (
     <CameraInteractionContext.Provider value={{ shouldSuppressClick }}>
+      <CameraStateContext.Provider value={{ camera, containerRef }}>
       <Box
       ref={containerRef}
       sx={{
@@ -59,8 +67,10 @@ export function KonvaCameraStage({
         overflow: 'hidden',
         touchAction: 'none',
         overscrollBehavior: 'none',
-        cursor: disabled ? 'not-allowed' : 'grab',
-        '&:active': { cursor: disabled ? 'not-allowed' : 'grabbing' },
+        cursor,
+        '&:active': {
+          cursor: disabled ? 'not-allowed' : panEnabled ? 'grabbing' : 'default',
+        },
         ...sx,
       }}
     >
@@ -70,6 +80,7 @@ export function KonvaCameraStage({
         </Stage>
       )}
     </Box>
+      </CameraStateContext.Provider>
     </CameraInteractionContext.Provider>
   );
 }

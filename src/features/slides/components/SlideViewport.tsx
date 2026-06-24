@@ -2,6 +2,8 @@ import { Box, useTheme } from '@mui/material';
 import { VIEWPORT_ZOOM } from '../constants/viewport';
 import { KonvaCameraStage } from '../engine/components/KonvaCameraStage';
 import { KonvaSlideScene } from '../engine/components/KonvaSlideScene';
+import { KonvaAnnotationLayer } from '../engine/components/KonvaAnnotationLayer';
+import { useSlideEditorStore } from '../model/store/slide-editor-store';
 import type { Slide } from '../types/slide.types';
 
 interface SlideViewportProps {
@@ -18,6 +20,9 @@ export function SlideViewport({
   onElementClick,
 }: SlideViewportProps) {
   const theme = useTheme();
+  const editorOpen = useSlideEditorStore((s) => s.editorOpen);
+  const activeTool = useSlideEditorStore((s) => s.activeTool);
+  const panEnabled = !editorOpen || activeTool === 'pan';
 
   return (
     <Box
@@ -37,9 +42,15 @@ export function SlideViewport({
         contentSize={{ width: slide.width, height: slide.height }}
         resetKey={slideKey}
         disabled={frozen}
+        panEnabled={panEnabled && !frozen}
         sx={{ width: '100%', height: '100%' }}
       >
         <KonvaSlideScene slide={slide} onElementClick={onElementClick} />
+        <KonvaAnnotationLayer
+          slideId={slide.id}
+          slideWidth={slide.width}
+          slideHeight={slide.height}
+        />
       </KonvaCameraStage>
     </Box>
   );

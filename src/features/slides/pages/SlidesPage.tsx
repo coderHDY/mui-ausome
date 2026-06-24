@@ -8,9 +8,12 @@ import { SlideViewport } from '../components/SlideViewport';
 import { SlideControls } from '../components/SlideControls';
 import { ElementPreviewModal } from '../components/ElementPreviewModal';
 import { resolvePreviewPayload } from '../types/slide.types';
+import { useSlideEditorStore } from '../model/store/slide-editor-store';
 
 export function SlidesPage() {
   usePreventBrowserZoom(true);
+  const clearSelection = useSlideEditorStore((s) => s.clearSelection);
+  const closeToolbar = useSlideEditorStore((s) => s.closeToolbar);
 
   const {
     currentIndex,
@@ -26,7 +29,9 @@ export function SlidesPage() {
 
   useEffect(() => {
     setPreviewElementId(null);
-  }, [currentIndex]);
+    clearSelection();
+    closeToolbar();
+  }, [currentIndex, clearSelection, closeToolbar]);
 
   const preview = useMemo(
     () =>
@@ -61,7 +66,7 @@ export function SlidesPage() {
           Slide 演示
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          滚轮或双指缩放画布；点击图片或蓝色按钮打开弹窗预览
+          滚轮缩放画布；右侧画笔打开编辑工具（Excalidraw 风格）
         </Typography>
       </Box>
 
@@ -82,6 +87,7 @@ export function SlidesPage() {
         />
 
         <SlideControls
+          slideId={currentSlide.id}
           currentIndex={currentIndex}
           total={total}
           canGoPrev={canGoPrev}

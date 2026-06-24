@@ -9,7 +9,10 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { spacing } from '@design-system/tokens';
 
+import { SlideEditorToolbar } from './SlideEditorToolbar';
+
 interface SlideControlsProps {
+  slideId: string;
   currentIndex: number;
   total: number;
   canGoPrev: boolean;
@@ -20,6 +23,7 @@ interface SlideControlsProps {
 }
 
 export function SlideControls({
+  slideId,
   currentIndex,
   total,
   canGoPrev,
@@ -70,6 +74,8 @@ export function SlideControls({
           </IconButton>
         </span>
       </Tooltip>
+
+      <SlideEditorToolbar slideId={slideId} />
 
       <Typography
         variant="caption"

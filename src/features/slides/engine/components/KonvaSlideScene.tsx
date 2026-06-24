@@ -3,6 +3,7 @@ import { alpha, useTheme } from '@mui/material';
 import type { Theme } from '@mui/material/styles';
 import { useSlideImage } from '../../hooks/useSlideImage';
 import { useCameraInteraction } from '../camera/cameraInteractionContext';
+import { useSlideEditorStore } from '../../model/store/slide-editor-store';
 import type { Slide, SlideElement } from '../../types/slide.types';
 
 const TEXT_COLOR_MAP = {
@@ -125,10 +126,12 @@ function SlideTextNode({
 export function KonvaSlideScene({ slide, onElementClick }: KonvaSlideSceneProps) {
   const theme = useTheme();
   const { shouldSuppressClick } = useCameraInteraction();
+  const editorOpen = useSlideEditorStore((s) => s.editorOpen);
   const paperColor = theme.palette.background.paper;
   const primaryColor = theme.palette.primary.main;
 
   const handleElementClick = (elementId: string) => {
+    if (editorOpen) return;
     if (shouldSuppressClick()) return;
     onElementClick(elementId);
   };
