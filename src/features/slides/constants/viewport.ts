@@ -3,7 +3,7 @@ export const VIEWPORT_ZOOM = {
   /** 主 slide 画布 */
   canvas: {
     initialScale: 1,
-    minScale: 0.5,
+    minScale: 1,
     maxScale: 3,
     wheelStep: 0.02,
     pinchStep: 1,
@@ -11,7 +11,7 @@ export const VIEWPORT_ZOOM = {
   /** 弹窗内预览 */
   modal: {
     initialScale: 1,
-    minScale: 0.5,
+    minScale: 1,
     maxScale: 4,
     wheelStep: 0.02,
     pinchStep: 1,

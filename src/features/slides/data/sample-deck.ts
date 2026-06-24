@@ -1,11 +1,11 @@
 import type { SlideDeck } from '../types/slide.types';
 
 const IMAGES = {
-  portrait: 'https://cdn-3.selfyzai.org/c620a22b-d509-45d4-a17e-6c299859a3cf.jpg',
-  balcony: 'https://cdn-3.selfyzai.org/9a692b19-12d1-488b-8d62-0403181928b8.jpg',
-  velvet: 'https://cdn-3.selfyzai.org/bb43e658-0594-4840-8918-d408d56f790f.jpg',
-  dragon: 'https://cdn-3.selfyzai.org/d2498667-48c5-4406-84ff-56ea7549e4b1.jpg',
-  fantasy: 'https://cdn-3.selfyzai.org/267ec18e-e19c-4b8a-b697-23550d02f7b5.jpg',
+  portrait: "https://cdn.openvideos.ai/sample/images/542556ca-50ad-48ee-beff-ddc3eb95f919.png",
+  balcony: "https://cdn.openvideos.ai/sample/images/928e5538-d1c7-4e99-83b4-a0036d1430ef.jpg",
+  velvet: "https://cdn.openvideos.ai/sample/images/3d21873a-9eae-4c3b-a6db-db0db94a8847.jpg",
+  dragon: "https://cdn.openvideos.ai/sample/images/a69d85ca-1883-4e33-8a3f-eaededaacc88.jpg",
+  fantasy: "https://cdn.openvideos.ai/sample/images/c057e373-53c8-4d8e-84e3-521d784e2bb0.png",
 } as const;
 
 const CANVAS_W = 1920;

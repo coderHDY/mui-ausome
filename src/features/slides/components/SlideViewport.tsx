@@ -43,6 +43,7 @@ export function SlideViewport({
         maxScale={zoom.maxScale}
         centerOnInit
         limitToBounds={false}
+        disablePadding
         smooth
         wheel={{
           step: zoom.wheelStep,

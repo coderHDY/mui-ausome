@@ -86,6 +86,7 @@ export function ElementPreviewModal({
             centerOnInit
             centerZoomedOut
             limitToBounds
+            disablePadding
             smooth
             wheel={{ step: zoom.wheelStep }}
             pinch={{ step: zoom.pinchStep }}
