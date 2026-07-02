@@ -35,6 +35,35 @@ function resolveThemeColor(
   return TEXT_FILL[token](theme);
 }
 
+/** 等价 CSS object-fit: cover — 保持比例填满占位框，居中裁剪 */
+function getImageCoverCrop(
+  imageWidth: number,
+  imageHeight: number,
+  boxWidth: number,
+  boxHeight: number,
+) {
+  const imgRatio = imageWidth / imageHeight;
+  const boxRatio = boxWidth / boxHeight;
+
+  if (imgRatio > boxRatio) {
+    const cropWidth = imageHeight * boxRatio;
+    return {
+      x: (imageWidth - cropWidth) / 2,
+      y: 0,
+      width: cropWidth,
+      height: imageHeight,
+    };
+  }
+
+  const cropHeight = imageWidth / boxRatio;
+  return {
+    x: 0,
+    y: (imageHeight - cropHeight) / 2,
+    width: imageWidth,
+    height: cropHeight,
+  };
+}
+
 function SlideImageNode({
   element,
   onClick,
@@ -44,6 +73,15 @@ function SlideImageNode({
 }) {
   const [image] = useSlideImage(element.src);
 
+  const crop =
+    image &&
+    getImageCoverCrop(
+      image.naturalWidth || image.width,
+      image.naturalHeight || image.height,
+      element.width,
+      element.height,
+    );
+
   return (
     <Group
       x={element.x}
@@ -51,12 +89,15 @@ function SlideImageNode({
       onClick={onClick}
       onTap={onClick}
     >
-      <KonvaImage
-        image={image}
-        width={element.width}
-        height={element.height}
-        cornerRadius={8}
-      />
+      {image && crop && (
+        <KonvaImage
+          image={image}
+          width={element.width}
+          height={element.height}
+          crop={crop}
+          cornerRadius={8}
+        />
+      )}
     </Group>
   );
 }

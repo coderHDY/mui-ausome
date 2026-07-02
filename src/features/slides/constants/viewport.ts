@@ -1,6 +1,10 @@
 /** 相机行为配置 — 字段与原 react-zoom-pan-pinch props 一一对应 */
 export type CameraConfig = {
   initialScale: number;
+  /** 为 true 时，重置/初始化按视口 fit 内容（不超过 1:1） */
+  fitToViewOnInit?: boolean;
+  /** fit 模式下的内边距（px） */
+  fitPadding?: number;
   minScale: number;
   maxScale: number;
   wheelStep: number;
@@ -23,7 +27,9 @@ export const VIEWPORT_ZOOM = {
   /** 主 slide 画布 — 对应 SlideViewport TransformWrapper */
   canvas: {
     initialScale: 1,
-    minScale: 1,
+    fitToViewOnInit: true,
+    fitPadding: 24,
+    minScale: 0.5,
     maxScale: 3,
     wheelStep: 0.03,
     pinchStep: 1.5,

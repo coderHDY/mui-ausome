@@ -1,8 +1,9 @@
+import { useRef } from 'react';
 import {
   Box,
   Divider,
   IconButton,
-  Paper,
+  Popover,
   Stack,
   Tooltip,
   Typography,
@@ -39,6 +40,7 @@ interface SlideEditorToolbarProps {
 
 export function SlideEditorToolbar({ slideId }: SlideEditorToolbarProps) {
   const theme = useTheme();
+  const anchorRef = useRef<HTMLButtonElement>(null);
 
   const toolbarOpen = useSlideEditorStore((s) => s.toolbarOpen);
   const editorOpen = useSlideEditorStore((s) => s.editorOpen);
@@ -48,6 +50,7 @@ export function SlideEditorToolbar({ slideId }: SlideEditorToolbarProps) {
   const stampKind = useSlideEditorStore((s) => s.stampKind);
   const selectedId = useSlideEditorStore((s) => s.selectedAnnotationId);
   const toggleToolbar = useSlideEditorStore((s) => s.toggleToolbar);
+  const closeToolbar = useSlideEditorStore((s) => s.closeToolbar);
   const selectTool = useSlideEditorStore((s) => s.selectTool);
   const confirmTool = useSlideEditorStore((s) => s.confirmTool);
   const setStrokeColor = useSlideEditorStore((s) => s.setStrokeColor);
@@ -86,7 +89,7 @@ export function SlideEditorToolbar({ slideId }: SlideEditorToolbarProps) {
     toolbarOpen && activeTool === 'stamp' && !editorOpen;
 
   return (
-    <Box sx={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
       <Tooltip
         title={
           toolbarOpen
@@ -98,6 +101,7 @@ export function SlideEditorToolbar({ slideId }: SlideEditorToolbarProps) {
         placement="left"
       >
         <IconButton
+          ref={anchorRef}
           aria-label="编辑工具"
           aria-expanded={toolbarOpen}
           aria-pressed={isEditing}
@@ -114,19 +118,31 @@ export function SlideEditorToolbar({ slideId }: SlideEditorToolbarProps) {
         </IconButton>
       </Tooltip>
 
-      {toolbarOpen && (
-        <Paper
-          elevation={8}
-          sx={{
-            position: 'absolute',
-            right: 'calc(100% + 8px)',
-            top: 0,
-            zIndex: theme.zIndex.modal,
+      <Popover
+        open={toolbarOpen}
+        anchorEl={anchorRef.current}
+        onClose={closeToolbar}
+        anchorOrigin={{ vertical: 'center', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'center', horizontal: 'right' }}
+        marginThreshold={8}
+        disableScrollLock
+        slotProps={{
+          root: {
+            slotProps: {
+              backdrop: { invisible: true },
+            },
+          },
+        }}
+        PaperProps={{
+          elevation: 8,
+          sx: {
             borderRadius: 2,
             border: `1px solid ${theme.palette.divider}`,
-            overflow: 'visible',
-          }}
-        >
+            maxHeight: 'calc(100vh - 32px)',
+            overflowY: 'auto',
+          },
+        }}
+      >
           <Stack spacing={0.5} sx={{ p: 0.75, minWidth: 48, alignItems: 'center' }}>
             {EDITOR_TOOLS.map(({ id, label }) => {
               const Icon = TOOL_ICONS[id];
@@ -270,8 +286,7 @@ export function SlideEditorToolbar({ slideId }: SlideEditorToolbarProps) {
               </>
             )}
           </Stack>
-        </Paper>
-      )}
+      </Popover>
     </Box>
   );
 }

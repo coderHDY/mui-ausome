@@ -63,14 +63,14 @@ export function SlidesPage() {
         mb: -1,
       }}
     >
-      <Box sx={{ px: spacing.md, pb: spacing.sm, flexShrink: 0 }}>
+      {/* <Box sx={{ px: spacing.md, pb: spacing.sm, flexShrink: 0 }}>
         <Typography variant="h5" component="h1">
           Slide 演示
         </Typography>
         <Typography variant="body2" color="text.secondary">
           滚轮缩放画布；右侧画笔编辑；⌘Z / ⌘⇧Z 撤销重做
         </Typography>
-      </Box>
+      </Box> */}
 
       <Box
         sx={{

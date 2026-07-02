@@ -5,6 +5,7 @@ import {
   clampCameraToBounds,
   clientToStagePoint,
   getCenteredCamera,
+  resolveInitialScale,
   getTouchCenter,
   getTouchDistance,
   scaleFromDoubleClick,
@@ -45,7 +46,11 @@ export function useKonvaCamera({
   containerRef,
 }: UseKonvaCameraOptions) {
   const [camera, setCamera] = useState<CameraState>(() =>
-    getCenteredCamera(stageSize, contentSize, config.initialScale),
+    getCenteredCamera(
+      stageSize,
+      contentSize,
+      resolveInitialScale(stageSize, contentSize, config),
+    ),
   );
 
   const isPanningRef = useRef(false);
@@ -94,8 +99,14 @@ export function useKonvaCamera({
   );
 
   const resetCamera = useCallback(() => {
-    applyCamera(getCenteredCamera(stageSize, contentSize, config.initialScale));
-  }, [applyCamera, config.initialScale, contentSize, stageSize]);
+    applyCamera(
+      getCenteredCamera(
+        stageSize,
+        contentSize,
+        resolveInitialScale(stageSize, contentSize, config),
+      ),
+    );
+  }, [applyCamera, config, contentSize, stageSize]);
 
   useEffect(() => {
     if (stageSize.width <= 0 || stageSize.height <= 0) return;

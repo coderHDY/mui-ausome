@@ -29,10 +29,16 @@ function LayoutRoute() {
  * 应用根组件
  * 负责路由配置和全局布局编排
  */
+const routerBasename =
+  import.meta.env.BASE_URL === '/'
+    ? undefined
+    : import.meta.env.BASE_URL.replace(/\/$/, '');
+
 function App() {
   return (
     <ThemeProvider>
       <BrowserRouter
+        basename={routerBasename}
         future={{
           v7_startTransition: true,
           v7_relativeSplatPath: true,

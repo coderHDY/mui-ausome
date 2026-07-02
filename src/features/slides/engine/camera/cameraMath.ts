@@ -36,6 +36,42 @@ export function getCenteredCamera(
   };
 }
 
+/** 将内容 fit 进视口，保持比例；默认不超过 1:1 */
+export function getFitScale(
+  stage: StageSize,
+  content: ContentSize,
+  padding = 0,
+  maxScale = 1,
+): number {
+  if (stage.width <= 0 || stage.height <= 0) return 1;
+  if (content.width <= 0 || content.height <= 0) return 1;
+
+  const availableWidth = Math.max(stage.width - padding * 2, 1);
+  const availableHeight = Math.max(stage.height - padding * 2, 1);
+  const scale = Math.min(
+    availableWidth / content.width,
+    availableHeight / content.height,
+  );
+
+  return Math.min(scale, maxScale);
+}
+
+/** 解析初始/重置时的 scale */
+export function resolveInitialScale(
+  stage: StageSize,
+  content: ContentSize,
+  config: Pick<
+    CameraConfig,
+    'initialScale' | 'fitToViewOnInit' | 'fitPadding' | 'maxScale'
+  >,
+): number {
+  const scale = config.fitToViewOnInit
+    ? getFitScale(stage, content, config.fitPadding ?? 0, 1)
+    : config.initialScale;
+
+  return Math.min(config.maxScale, scale);
+}
+
 /** 以指针为锚点缩放 — 等价 wheel + pinch 锚点行为 */
 export function zoomAtPointer(
   camera: CameraState,
