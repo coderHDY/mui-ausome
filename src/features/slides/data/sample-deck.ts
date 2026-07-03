@@ -68,7 +68,7 @@ export const sampleDeck: SlideDeck = {
           height: 48,
           previewTitle: '操作说明',
           previewText:
-            '· 滚轮 / 触控板：缩放画布（50% ~ 300%）\n· 放大后拖动：平移可视区域\n· 点击图片：弹窗独立预览\n· 右侧按钮：切换 slide',
+            '· 滚轮 / 触控板：缩放画布（100% ~ 300%）\n· 放大后拖动：平移可视区域\n· 点击图片：弹窗独立预览\n· 右侧按钮：切换 slide',
         },
       ],
     },
@@ -294,7 +294,7 @@ export const sampleDeck: SlideDeck = {
           height: 48,
           previewTitle: '支持的功能',
           previewText:
-            '画布缩放：50% ~ 300%\n弹窗预览：50% ~ 400%\n设备支持：鼠标滚轮、触控板、手机双指\n切页行为：自动重置 zoom',
+            '画布缩放：100% ~ 300%\n弹窗预览：100% ~ 400%\n设备支持：鼠标滚轮、触控板、手机双指\n切页行为：自动重置 zoom',
         },
       ],
     },

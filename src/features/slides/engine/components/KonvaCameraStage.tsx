@@ -34,11 +34,13 @@ export function KonvaCameraStage({
     const el = containerRef.current;
     if (!el) return;
 
-    const observer = new ResizeObserver(([entry]) => {
-      const { width, height } = entry.contentRect;
+    const updateSize = () => {
+      const { width, height } = el.getBoundingClientRect();
       setStageSize({ width: Math.floor(width), height: Math.floor(height) });
-    });
+    };
 
+    updateSize();
+    const observer = new ResizeObserver(updateSize);
     observer.observe(el);
     return () => observer.disconnect();
   }, []);

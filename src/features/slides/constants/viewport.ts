@@ -1,7 +1,7 @@
 /** 相机行为配置 — 字段与原 react-zoom-pan-pinch props 一一对应 */
 export type CameraConfig = {
   initialScale: number;
-  /** 为 true 时，重置/初始化按视口 fit 内容（不超过 1:1） */
+  /** 为 true 时，重置/初始化/窗口 resize 按视口 contain 内容（完整展示 + 尽量铺满） */
   fitToViewOnInit?: boolean;
   /** fit 模式下的内边距（px） */
   fitPadding?: number;
@@ -28,8 +28,8 @@ export const VIEWPORT_ZOOM = {
   canvas: {
     initialScale: 1,
     fitToViewOnInit: true,
-    fitPadding: 24,
-    minScale: 0.5,
+    fitPadding: 0,
+    minScale: 1,
     maxScale: 3,
     wheelStep: 0.03,
     pinchStep: 1.5,

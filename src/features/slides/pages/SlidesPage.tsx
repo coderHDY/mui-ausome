@@ -58,9 +58,8 @@ export function SlidesPage() {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        height: 'calc(100vh - 64px - 16px)',
-        mx: -1,
-        mb: -1,
+        height: 'calc(100vh - 64px)',
+        m: -1,
       }}
     >
       {/* <Box sx={{ px: spacing.md, pb: spacing.sm, flexShrink: 0 }}>
@@ -77,8 +76,6 @@ export function SlidesPage() {
           display: 'flex',
           flex: 1,
           minHeight: 0,
-          borderTop: 1,
-          borderColor: 'divider',
         }}
       >
         <SlideViewport

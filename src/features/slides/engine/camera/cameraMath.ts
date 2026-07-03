@@ -36,27 +36,45 @@ export function getCenteredCamera(
   };
 }
 
-/** 将内容 fit 进视口，保持比例；默认不超过 1:1 */
+/** 将内容 contain 进视口，保持比例并尽量占满可用区域（可放大或缩小） */
 export function getFitScale(
   stage: StageSize,
   content: ContentSize,
   padding = 0,
-  maxScale = 1,
 ): number {
   if (stage.width <= 0 || stage.height <= 0) return 1;
   if (content.width <= 0 || content.height <= 0) return 1;
 
   const availableWidth = Math.max(stage.width - padding * 2, 1);
   const availableHeight = Math.max(stage.height - padding * 2, 1);
-  const scale = Math.min(
+
+  return Math.min(
     availableWidth / content.width,
     availableHeight / content.height,
   );
-
-  return Math.min(scale, maxScale);
 }
 
-/** 解析初始/重置时的 scale */
+/** 交互缩放边界：不低于 fit 比例，确保始终能缩回「完整展示」 */
+export function resolveScaleBounds(
+  stage: StageSize,
+  content: ContentSize,
+  config: Pick<
+    CameraConfig,
+    'fitToViewOnInit' | 'fitPadding' | 'minScale' | 'maxScale'
+  >,
+): Pick<CameraConfig, 'minScale' | 'maxScale'> {
+  if (!config.fitToViewOnInit) {
+    return { minScale: config.minScale, maxScale: config.maxScale };
+  }
+
+  const fitScale = getFitScale(stage, content, config.fitPadding ?? 0);
+  return {
+    minScale: Math.min(config.minScale, fitScale),
+    maxScale: config.maxScale,
+  };
+}
+
+/** 解析初始/重置时的 scale（contain 全屏 fit；允许低于 config.minScale） */
 export function resolveInitialScale(
   stage: StageSize,
   content: ContentSize,
@@ -66,7 +84,7 @@ export function resolveInitialScale(
   >,
 ): number {
   const scale = config.fitToViewOnInit
-    ? getFitScale(stage, content, config.fitPadding ?? 0, 1)
+    ? getFitScale(stage, content, config.fitPadding ?? 0)
     : config.initialScale;
 
   return Math.min(config.maxScale, scale);

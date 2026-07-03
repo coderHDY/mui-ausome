@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type Konva from 'konva';
 import type { CameraConfig } from '../../constants/viewport';
 import {
@@ -6,6 +6,7 @@ import {
   clientToStagePoint,
   getCenteredCamera,
   resolveInitialScale,
+  resolveScaleBounds,
   getTouchCenter,
   getTouchDistance,
   scaleFromDoubleClick,
@@ -63,6 +64,11 @@ export function useKonvaCamera({
   const pinchStartRef = useRef<{ distance: number; scale: number } | null>(null);
   const cameraRef = useRef(camera);
   cameraRef.current = camera;
+
+  const zoomConfig = useMemo(() => {
+    const bounds = resolveScaleBounds(stageSize, contentSize, config);
+    return { ...config, ...bounds };
+  }, [config, contentSize, stageSize]);
 
   const markDragIfNeeded = useCallback((clientX: number, clientY: number) => {
     const session = pointerSessionRef.current;
@@ -140,14 +146,14 @@ export function useKonvaCamera({
         current.scale,
         e.evt.deltaY,
         e.evt.deltaMode,
-        config,
+        zoomConfig,
       );
 
       if (newScale === current.scale) return;
 
       applyCamera(zoomAtPointer(current, pointer, newScale));
     },
-    [applyCamera, config, containerRef, disabled],
+    [applyCamera, containerRef, disabled, zoomConfig],
   );
 
   const handlePointerDown = useCallback(
@@ -222,8 +228,8 @@ export function useKonvaCamera({
         const newScale = scaleFromPinch(
           pinchStartRef.current.scale,
           ratio,
-          config.pinchStep,
-          config,
+          zoomConfig.pinchStep,
+          zoomConfig,
         );
 
         const center = getTouchCenter(e.evt.touches);
@@ -259,7 +265,7 @@ export function useKonvaCamera({
         });
       }
     },
-    [applyCamera, config, containerRef, disabled, markDragIfNeeded],
+    [applyCamera, containerRef, disabled, markDragIfNeeded, zoomConfig],
   );
 
   const handleTouchEnd = useCallback(() => {
@@ -283,13 +289,13 @@ export function useKonvaCamera({
       const current = cameraRef.current;
       const newScale = scaleFromDoubleClick(
         current.scale,
-        config.doubleClick,
-        config,
+        zoomConfig.doubleClick,
+        zoomConfig,
       );
 
       applyCamera(zoomAtPointer(current, pointer, newScale));
     },
-    [applyCamera, config, containerRef, disabled],
+    [applyCamera, containerRef, disabled, zoomConfig],
   );
 
   return {

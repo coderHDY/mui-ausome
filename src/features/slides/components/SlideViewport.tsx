@@ -31,8 +31,6 @@ export function SlideViewport({
         minWidth: 0,
         minHeight: 0,
         overflow: 'hidden',
-        borderRadius: 1,
-        border: `1px solid ${theme.palette.divider}`,
         bgcolor: theme.palette.mode === 'dark' ? 'grey.900' : 'grey.200',
         position: 'relative',
       }}
