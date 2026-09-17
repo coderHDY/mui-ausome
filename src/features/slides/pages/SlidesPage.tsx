@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Box, Typography } from '@mui/material';
-import { spacing } from '@design-system/tokens';
+import { Box } from '@mui/material';
 import { sampleDeck } from '../data/sample-deck';
 import { useSlideNavigation } from '../hooks/useSlideNavigation';
 import { usePreventBrowserZoom } from '../hooks/usePreventBrowserZoom';
@@ -10,10 +9,12 @@ import { ElementPreviewModal } from '../components/ElementPreviewModal';
 import { resolvePreviewPayload } from '../types/slide.types';
 import { useSlideEditorStore } from '../model/store/slide-editor-store';
 import { useSlideEditorHistory } from '../hooks/useSlideEditorHistory';
+import { useSlideStageSync } from '../hooks/useSlideStageSync';
 
 export function SlidesPage() {
   usePreventBrowserZoom(true);
   useSlideEditorHistory(true);
+  useSlideStageSync();
   const clearSelection = useSlideEditorStore((s) => s.clearSelection);
   const closeToolbar = useSlideEditorStore((s) => s.closeToolbar);
 

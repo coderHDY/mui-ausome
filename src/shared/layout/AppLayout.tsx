@@ -17,6 +17,7 @@ import {
 import { type ReactNode } from "react";
 import { useUIStore } from "../state";
 import { ThemeToggle, FullscreenToggle } from "../components";
+import { useStageRuntime } from "../stage";
 import { spacing } from "@design-system/tokens";
 
 const DRAWER_WIDTH = 280;
@@ -38,6 +39,7 @@ export function AppLayout({
   sidebarContent,
   title = "Admin Dashboard",
 }: AppLayoutProps) {
+  const stageRole = useStageRuntime();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const sidebarOpen = useUIStore((state) => state.sidebarOpen);
@@ -67,7 +69,15 @@ export function AppLayout({
     : DRAWER_WIDTH;
 
   return (
-    <Box sx={{ display: "flex", minHeight: "100vh" }}>
+    <Box
+      sx={{
+        display: "flex",
+        minHeight: "100vh",
+        ...(stageRole === "stage"
+          ? { pointerEvents: "none", userSelect: "none" }
+          : {}),
+      }}
+    >
       {/* 顶部应用栏 - 始终全宽，不被侧边栏挤压 */}
       <AppBar
         position="fixed"

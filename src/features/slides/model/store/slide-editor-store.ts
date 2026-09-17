@@ -48,6 +48,7 @@ type SlideEditorState = {
   redo: () => void;
 
   getAnnotations: (slideId: string) => AnnotationElement[];
+  replaceAnnotations: (snapshot: AnnotationsSnapshot) => void;
   addAnnotation: (slideId: string, element: AnnotationElement) => void;
   updateAnnotation: (
     slideId: string,
@@ -190,6 +191,9 @@ export const useSlideEditorStore = create<SlideEditorState>((set, get) => {
     },
 
     getAnnotations: (slideId) => get().annotationsBySlideId[slideId] ?? [],
+
+    replaceAnnotations: (snapshot) =>
+      set({ annotationsBySlideId: cloneAnnotationsSnapshot(snapshot) }),
 
     addAnnotation: (slideId, element) => {
       recordHistory();

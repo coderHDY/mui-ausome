@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useShareStage } from '../stage';
 
 interface FullscreenControls {
   isFullscreen: boolean;
@@ -6,34 +6,15 @@ interface FullscreenControls {
   toggleFullscreen: () => void;
 }
 
+/**
+ * 全屏按钮的兼容封装：本 tab 不进全屏，改为开关同步舞台窗。
+ */
 export function useFullscreen(): FullscreenControls {
-  const [isFullscreen, setIsFullscreen] = useState<boolean>(
-    document.fullscreenElement !== null,
-  );
-
-  useEffect(() => {
-    const handleFullscreenChange = (): void => {
-      setIsFullscreen(document.fullscreenElement !== null);
-    };
-
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    return () => {
-      document.removeEventListener('fullscreenchange', handleFullscreenChange);
-    };
-  }, []);
-
-  const toggleFullscreen = (): void => {
-    if (document.fullscreenElement) {
-      void document.exitFullscreen().catch(() => undefined);
-      return;
-    }
-
-    void document.documentElement.requestFullscreen().catch(() => undefined);
-  };
+  const { isStageOpen, toggleStage } = useShareStage();
 
   return {
-    isFullscreen,
-    isFullscreenSupported: document.fullscreenEnabled,
-    toggleFullscreen,
+    isFullscreen: isStageOpen,
+    isFullscreenSupported: true,
+    toggleFullscreen: toggleStage,
   };
 }
