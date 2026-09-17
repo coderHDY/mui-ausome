@@ -16,7 +16,7 @@ import {
 } from "@mui/icons-material";
 import { type ReactNode } from "react";
 import { useUIStore } from "../state";
-import { ThemeToggle } from "../components";
+import { ThemeToggle, FullscreenToggle } from "../components";
 import { spacing } from "@design-system/tokens";
 
 const DRAWER_WIDTH = 280;
@@ -99,6 +99,7 @@ export function AppLayout({
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             {title}
           </Typography>
+          <FullscreenToggle />
           <ThemeToggle />
         </Toolbar>
       </AppBar>

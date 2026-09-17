@@ -3,5 +3,6 @@
  * 这是共享模块的公共API
  */
 export * from './components';
+export * from './hooks';
 export * from './state';
 
