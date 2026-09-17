@@ -17,6 +17,7 @@ import {
 import { type ReactNode } from "react";
 import { useUIStore } from "../state";
 import { ThemeToggle, FullscreenToggle } from "../components";
+import { uiScaled } from "../hooks";
 import { spacing } from "@design-system/tokens";
 
 const DRAWER_WIDTH = 280;
@@ -114,14 +115,27 @@ export function AppLayout({
           keepMounted: !isMobile,
         }}
         sx={{
-          width: drawerWidth,
+          width: uiScaled(drawerWidth),
           flexShrink: 0,
           "& .MuiDrawer-paper": {
-            width: drawerWidth,
+            width: uiScaled(drawerWidth),
             boxSizing: "border-box",
             display: "flex",
             flexDirection: "column",
             overflowX: "hidden",
+            fontSize: uiScaled(16),
+            "& .MuiSvgIcon-root": {
+              fontSize: uiScaled(24),
+            },
+            "& .MuiListItemText-primary": {
+              fontSize: uiScaled(16),
+            },
+            "& .MuiListItemButton-root": {
+              minHeight: uiScaled(48),
+            },
+            "& .MuiListItemIcon-root": {
+              minWidth: sidebarCollapsed && !isMobile ? 0 : uiScaled(56),
+            },
             // PC版：侧边栏从Header下方开始
             // 移动端：全屏覆盖
             ...(isMobile
