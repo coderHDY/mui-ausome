@@ -285,3 +285,69 @@ export function screenToWorld(
     y: (screen.y - camera.y) / camera.scale,
   };
 }
+
+/** 与 stage 尺寸无关的视口：世界坐标中心 + 缩放 */
+export type CameraViewport = {
+  scale: number;
+  centerX: number;
+  centerY: number;
+};
+
+export function cameraToViewport(
+  camera: CameraState,
+  stage: StageSize,
+): CameraViewport {
+  return {
+    scale: camera.scale,
+    centerX: (stage.width / 2 - camera.x) / camera.scale,
+    centerY: (stage.height / 2 - camera.y) / camera.scale,
+  };
+}
+
+export function viewportToCamera(
+  viewport: CameraViewport,
+  stage: StageSize,
+  content: ContentSize,
+  config: Pick<
+    CameraConfig,
+    | 'limitToBounds'
+    | 'centerZoomedOut'
+    | 'disablePadding'
+    | 'fitToViewOnInit'
+    | 'fitPadding'
+    | 'minScale'
+    | 'maxScale'
+  >,
+): CameraState {
+  const bounds = resolveScaleBounds(stage, content, config);
+  const scale = clampScale(viewport.scale, bounds);
+  return clampCameraToBounds(
+    {
+      scale,
+      x: stage.width / 2 - viewport.centerX * scale,
+      y: stage.height / 2 - viewport.centerY * scale,
+    },
+    stage,
+    content,
+    config,
+  );
+}
+
+export function camerasClose(left: CameraState, right: CameraState): boolean {
+  return (
+    Math.abs(left.scale - right.scale) < 1e-6 &&
+    Math.abs(left.x - right.x) < 0.5 &&
+    Math.abs(left.y - right.y) < 0.5
+  );
+}
+
+export function viewportsClose(
+  left: CameraViewport,
+  right: CameraViewport,
+): boolean {
+  return (
+    Math.abs(left.scale - right.scale) < 1e-6 &&
+    Math.abs(left.centerX - right.centerX) < 0.5 &&
+    Math.abs(left.centerY - right.centerY) < 0.5
+  );
+}

@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { spacing } from '@design-system/tokens';
+import { getStageRole } from '@shared/stage';
 import { KonvaPreviewImage } from '../engine/components/KonvaPreviewImage';
 import type { SlidePreviewPayload } from '../types/slide.types';
 
@@ -23,11 +24,13 @@ export function ElementPreviewModal({
   onClose,
 }: ElementPreviewModalProps) {
   const theme = useTheme();
+  const isStage = getStageRole() === 'stage';
 
   return (
     <Dialog
       open={open}
-      onClose={onClose}
+      onClose={isStage ? undefined : onClose}
+      disableEscapeKeyDown={isStage}
       maxWidth={false}
       fullWidth
       PaperProps={{
@@ -38,6 +41,7 @@ export function ElementPreviewModal({
           display: 'flex',
           flexDirection: 'column',
           overflow: 'hidden',
+          ...(isStage ? { pointerEvents: 'none' } : {}),
         },
       }}
     >

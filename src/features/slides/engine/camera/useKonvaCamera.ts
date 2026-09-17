@@ -1,8 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type Konva from 'konva';
+import { getStageRole } from '@shared/stage';
 import type { CameraConfig } from '../../constants/viewport';
+import { useSlideCameraStore } from '../../model/store/slide-camera-store';
 import {
   clampCameraToBounds,
+  camerasClose,
+  cameraToViewport,
   clientToStagePoint,
   getCenteredCamera,
   resolveInitialScale,
@@ -12,6 +16,7 @@ import {
   scaleFromDoubleClick,
   scaleFromPinch,
   scaleFromWheel,
+  viewportToCamera,
   zoomAtPointer,
   type CameraState,
   type ContentSize,
@@ -23,6 +28,8 @@ type UseKonvaCameraOptions = {
   stageSize: StageSize;
   contentSize: ContentSize;
   resetKey?: string;
+  /** 主画布 slideId；传入后参与舞台视口同步。预览弹窗不要传 */
+  syncSlideId?: string;
   disabled?: boolean;
   panEnabled?: boolean;
   containerRef: React.RefObject<HTMLDivElement | null>;
@@ -42,6 +49,7 @@ export function useKonvaCamera({
   stageSize,
   contentSize,
   resetKey,
+  syncSlideId,
   disabled = false,
   panEnabled = true,
   containerRef,
@@ -99,9 +107,21 @@ export function useKonvaCamera({
     (next: CameraState) => {
       const clamped = clampCameraToBounds(next, stageSize, contentSize, config);
       setCamera(clamped);
+
+      if (
+        getStageRole() === 'controller' &&
+        syncSlideId &&
+        stageSize.width > 0 &&
+        stageSize.height > 0
+      ) {
+        useSlideCameraStore
+          .getState()
+          .setViewport(syncSlideId, cameraToViewport(clamped, stageSize));
+      }
+
       return clamped;
     },
-    [config, contentSize, stageSize],
+    [config, contentSize, stageSize, syncSlideId],
   );
 
   const resetCamera = useCallback(() => {
@@ -117,15 +137,41 @@ export function useKonvaCamera({
   useEffect(() => {
     if (stageSize.width <= 0 || stageSize.height <= 0) return;
     if (contentSize.width <= 0 || contentSize.height <= 0) return;
+
+    const role = getStageRole();
+    const stored = syncSlideId
+      ? useSlideCameraStore.getState().viewportsBySlideId[syncSlideId]
+      : undefined;
+
+    if (role === 'stage') {
+      if (stored) {
+        setCamera(viewportToCamera(stored, stageSize, contentSize, config));
+        return;
+      }
+    }
+
     resetCamera();
   }, [
     resetKey,
     resetCamera,
-    stageSize.width,
-    stageSize.height,
-    contentSize.width,
-    contentSize.height,
+    stageSize,
+    contentSize,
+    syncSlideId,
+    config,
   ]);
+
+  useEffect(() => {
+    if (getStageRole() !== 'stage' || !syncSlideId) return;
+    if (stageSize.width <= 0 || stageSize.height <= 0) return;
+    if (contentSize.width <= 0 || contentSize.height <= 0) return;
+
+    return useSlideCameraStore.subscribe((state) => {
+      const stored = state.viewportsBySlideId[syncSlideId];
+      if (!stored) return;
+      const next = viewportToCamera(stored, stageSize, contentSize, config);
+      setCamera((current) => (camerasClose(current, next) ? current : next));
+    });
+  }, [config, contentSize, stageSize, syncSlideId]);
 
   const handleWheel = useCallback(
     (e: Konva.KonvaEventObject<WheelEvent>) => {
@@ -295,7 +341,7 @@ export function useKonvaCamera({
 
       applyCamera(zoomAtPointer(current, pointer, newScale));
     },
-    [applyCamera, containerRef, disabled, zoomConfig],
+    [applyCamera, config.doubleClick.disabled, containerRef, disabled, zoomConfig],
   );
 
   return {

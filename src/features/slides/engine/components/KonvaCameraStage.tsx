@@ -11,6 +11,7 @@ interface KonvaCameraStageProps {
   config: CameraConfig;
   contentSize: ContentSize;
   resetKey?: string;
+  syncSlideId?: string;
   disabled?: boolean;
   panEnabled?: boolean;
   children: ReactNode;
@@ -22,6 +23,7 @@ export function KonvaCameraStage({
   config,
   contentSize,
   resetKey,
+  syncSlideId,
   disabled = false,
   panEnabled = true,
   children,
@@ -50,6 +52,7 @@ export function KonvaCameraStage({
     stageSize,
     contentSize,
     resetKey,
+    syncSlideId,
     disabled,
     panEnabled,
     containerRef,

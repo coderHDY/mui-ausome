@@ -39,6 +39,7 @@ export function SlideViewport({
         config={VIEWPORT_ZOOM.canvas}
         contentSize={{ width: slide.width, height: slide.height }}
         resetKey={slideKey}
+        syncSlideId={slide.id}
         disabled={frozen}
         panEnabled={panEnabled && !frozen}
         sx={{ width: '100%', height: '100%' }}

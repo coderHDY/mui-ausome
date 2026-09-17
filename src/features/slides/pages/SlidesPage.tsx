@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { Box } from '@mui/material';
 import { sampleDeck } from '../data/sample-deck';
 import { useSlideNavigation } from '../hooks/useSlideNavigation';
@@ -8,6 +8,7 @@ import { SlideControls } from '../components/SlideControls';
 import { ElementPreviewModal } from '../components/ElementPreviewModal';
 import { resolvePreviewPayload } from '../types/slide.types';
 import { useSlideEditorStore } from '../model/store/slide-editor-store';
+import { useSlideOverlayStore } from '../model/store/slide-overlay-store';
 import { useSlideEditorHistory } from '../hooks/useSlideEditorHistory';
 import { useSlideStageSync } from '../hooks/useSlideStageSync';
 
@@ -28,13 +29,16 @@ export function SlidesPage() {
     canGoNext,
   } = useSlideNavigation(sampleDeck);
 
-  const [previewElementId, setPreviewElementId] = useState<string | null>(null);
+  const previewElementId = useSlideOverlayStore((s) => s.previewElementId);
+  const setPreviewElementId = useSlideOverlayStore(
+    (s) => s.setPreviewElementId,
+  );
 
   useEffect(() => {
     setPreviewElementId(null);
     clearSelection();
     closeToolbar();
-  }, [currentIndex, clearSelection, closeToolbar]);
+  }, [currentIndex, clearSelection, closeToolbar, setPreviewElementId]);
 
   const preview = useMemo(
     () =>
@@ -44,13 +48,16 @@ export function SlidesPage() {
     [currentSlide.elements, previewElementId],
   );
 
-  const handleElementClick = useCallback((elementId: string) => {
-    setPreviewElementId(elementId);
-  }, []);
+  const handleElementClick = useCallback(
+    (elementId: string) => {
+      setPreviewElementId(elementId);
+    },
+    [setPreviewElementId],
+  );
 
   const handleClosePreview = useCallback(() => {
     setPreviewElementId(null);
-  }, []);
+  }, [setPreviewElementId]);
 
   const modalOpen = previewElementId !== null;
 
